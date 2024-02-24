@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import "./navbar.css";
 
 const Navbar = () => {
@@ -48,12 +47,14 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center ml-0 ">
-            <Link
-              to="/register" // Specify the path to the register page
-              className="border py-2 px-3 rounded-lg hover:border-blue-400 "
-            >
+            <a
+              href="/contact"
+              className="hover:text-blue-400 px-3 py-2 text-black">
+              Sign In
+            </a>
+            <button className="border py-2 px-3 rounded-lg hover:border-blue-400 b">
               Register
-            </Link>
+            </button>
           </div>
         </div>
       </div>

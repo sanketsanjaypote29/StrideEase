@@ -10,12 +10,11 @@ const Home = () => {
         </h1>
         <p className="text-2xl mb-4 text-gray">StrideEase, fast and easy.</p>
       </div>
-      <div className="flex justify-start mt-10 ml-40">
+      <div className="flex justify-start mt-10 ml-40 w-2/5 h-2/5 mr-20">
         <img
-          src="/marathon.jpg"
+          src="./jogging/jogging-not-css.svg"
           alt="Marathon"
-          className="w-80 h-3/4"
-          style={{ marginLeft: "144px" }}
+          className="w-full h-full "
         />
       </div>
     </div>

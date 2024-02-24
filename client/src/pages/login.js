@@ -9,8 +9,8 @@ const Login = () => {
       {/* Left container with SVG */}
       <div className="flex justify-start mt-10 ml-40 w-xl h-xl mr-20">
         <img
-          src="./sign-up/sign-up-not-css.svg"
-          alt="Marathon"
+          src="./tablet-login/tablet-login-not-css.svg"
+          alt="login"
           className="w-full h-full "
         />
       </div>

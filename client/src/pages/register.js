@@ -10,7 +10,7 @@ const Register = () => {
       <div className="flex justify-start mt-10 ml-40 w-xl h-xl mr-20">
         <img
           src="./sign-up/sign-up-not-css.svg"
-          alt="Marathon"
+          alt="register"
           className="w-full h-full "
         />
       </div>
@@ -62,7 +62,7 @@ const Register = () => {
             <button className="bg-transparent hover:border-blue-800 border mt-11 ml-8 text-black py-2 px-4 rounded-full flex items-center">
               <div className="mr-2">
                 {" "}
-                {/* Wrapper div for spacing */}
+             
                 <FcGoogle /> {/* Add the Google icon */}
               </div>
               Google

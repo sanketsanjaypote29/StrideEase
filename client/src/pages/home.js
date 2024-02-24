@@ -10,7 +10,7 @@ const Home = () => {
         </h1>
         <p className="text-2xl mb-4 text-gray">StrideEase, fast and easy.</p>
       </div>
-      <div className="flex justify-start mt-10 ml-40 w-2/5 h-2/5 mr-20">
+      <div className="flex justify-start mt-10 ml-40 w-2/5 h-2/5 mr-0">
         <img
           src="./jogging/jogging-not-css.svg"
           alt="Marathon"

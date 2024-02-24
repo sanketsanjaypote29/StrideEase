@@ -4,7 +4,8 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Home from "./pages/home";
-  import Register from "./pages/register"; // Import the Register component
+import Register from "./pages/register"; // Import the Register component
+import Login from "./pages/login"; // Import the Register component
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );

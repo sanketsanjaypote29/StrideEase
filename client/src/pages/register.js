@@ -1,6 +1,7 @@
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { IoCreate } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   return (
@@ -49,27 +50,30 @@ const Register = () => {
               </label>
             </div>
           </div>
-          <button className="bg-transparent hover:border-blue-800 border mt-11 ml-16 text-black py-2 px-4 rounded-full flex items-center">
-            <div className="mr-2">
-              {" "}
-              {/* Wrapper div for spacing */}
-              <IoCreate /> {/* Add the Google icon */}
-            </div>
-            Create Account
-          </button>
-          <button className="bg-transparent hover:border-blue-800 border mt-5 ml-24 text-black py-2 px-4 rounded-full flex items-center">
-            <div className="mr-2">
-              {" "}
-              {/* Wrapper div for spacing */}
-              <FcGoogle /> {/* Add the Google icon */}
-            </div>
-            Google
-          </button>
+          <div className="flex justify-center">
+            <button className="bg-transparent hover:border-blue-800 border mt-11 text-black py-2 px-4 rounded-full  flex items-center">
+              <div className="mr-2">
+                {" "}
+                {/* Wrapper div for spacing */}
+                <IoCreate /> {/* Add the Google icon */}
+              </div>
+              Create
+            </button>
+            <button className="bg-transparent hover:border-blue-800 border mt-11 ml-8 text-black py-2 px-4 rounded-full flex items-center">
+              <div className="mr-2">
+                {" "}
+                {/* Wrapper div for spacing */}
+                <FcGoogle /> {/* Add the Google icon */}
+              </div>
+              Google
+            </button>
+          </div>
+
           <p className="text-center mt-5">
             Do you have an account?{" "}
-            <a href="#" className="text-blue-800">
+            <Link to="/login" className="text-blue-800">
               Login
-            </a>
+            </Link>
           </p>
         </form>
       </div>

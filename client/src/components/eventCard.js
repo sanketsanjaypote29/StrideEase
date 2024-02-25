@@ -3,9 +3,13 @@ import { TERipple } from "tw-elements-react";
 
 import { FaRegShareSquare } from "react-icons/fa";
 import { FcLike } from "react-icons/fc";
-
+import { useNavigate } from "react-router-dom";
 
 const EventCard = () => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/viewEventDetails");
+  };
   return (
     <div className="block w-96 h-fit ml-16 bg-amber-50 rounded-3xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] shadow-blue-100  dark:bg-white-700">
       <TERipple>
@@ -34,8 +38,10 @@ const EventCard = () => {
           <button className="text-2xl right-28 bottom-2 absolute">
             <FaRegShareSquare />
           </button>
-          <button className="absolute bottom-0 right-0  bg-transperent text-black border hover:bg-pink-500 hover:font-bold hover:text-white px-4 py-2 rounded">
-            Free
+          <button
+            className="absolute bottom-0 right-0  bg-transperent text-black border hover:bg-pink-400 hover:font-bold hover:text-white px-4 py-2 rounded"
+            onClick={handleClick}>
+            More
           </button>
         </div>
       </div>

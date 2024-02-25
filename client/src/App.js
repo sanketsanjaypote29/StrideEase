@@ -7,6 +7,8 @@ import Home from "./pages/home";
 import Register from "./pages/register"; // Import the Register component
 import Login from "./pages/login"; // Import the Register component
 import Dashboard from "./pages/dashboard";
+import CreateEvent from "./pages/createEvent";
+import ViewEventDetails from "./pages/viewEventDetails";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/createevent" element={<CreateEvent />} />
+        <Route path="/viewEventDetails" element={<ViewEventDetails />} />
       </Routes>
     </>
   );

@@ -59,14 +59,7 @@ const Register = () => {
               </div>
               Create
             </button>
-            <button className="bg-transparent hover:border-blue-800 border mt-11 ml-8 text-black py-2 px-4 rounded-full flex items-center">
-              <div className="mr-2">
-                {" "}
-             
-                <FcGoogle /> {/* Add the Google icon */}
-              </div>
-              Google
-            </button>
+            
           </div>
 
           <p className="text-center mt-5">

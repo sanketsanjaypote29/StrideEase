@@ -73,17 +73,18 @@ const ViewEventDetails = () => {
             <h2 className="text-black font-semibold">
               ₹499 /- Onwards Exclusive of Taxes and Platform Fees
             </h2>
-            
-            <button className="border px-2 py-3 rounded-lg mt-10 bg-blue-300 hover:bg-blue-500 text-white font-bold flex items-center">
-            <MdLockOutline className="ml-2 mr-3" size={"25px"} /> Book Now
+
+            <button className="border  px-2 py-3 rounded-lg mt-10 bg-amer-500   text-black border-black font-bold flex items-center">
+              <MdLockOutline className="ml-2 mr-3" size={"25px"} /> Book Now
             </button>
           </div>
-          <div className="border bg-amber-100 p-4 w-80 mr-10 mt-10 rounded-lg">
+          <div className="border bg-amber-100  p-4 w-80 mr-10 mt-10 rounded-lg">
             <h2 className="text-black font-semibold">
               Have any Doubts? Send any Queries To the Organizer
             </h2>
-            <button className="border px-2 py-3 rounded-lg mt-10 bg-blue-300 hover:bg-blue-500 text-white font-bold flex items-center">
-            <MdOutlineContactMail className="ml-2 mr-3" size={"25px"} /> Contact Organizer 
+            <button className="border px-2 py-3 rounded-lg mt-10 bg-amer-500 border-black text-black font-bold flex items-center">
+              <MdOutlineContactMail className="ml-2 mr-3" size={"25px"} />{" "}
+              Contact Organizer
             </button>
           </div>
         </div>

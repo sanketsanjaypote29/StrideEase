@@ -17,6 +17,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { RxCross1 } from "react-icons/rx";
 import Modal from "./Modal";
+import CreateEventForm from "../pages/createEventForm";
 
 const Navbar = () => {
   const navigate = useNavigate();

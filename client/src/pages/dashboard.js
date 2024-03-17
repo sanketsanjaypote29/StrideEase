@@ -24,8 +24,7 @@ const Dashboard = () => {
     <div className="h-full overflow-x-hidden">
       <EventFilter />
       <EventContainer />
-      <EventContainer />
-      <Footer/>
+      <Footer />
     </div>
   );
 };

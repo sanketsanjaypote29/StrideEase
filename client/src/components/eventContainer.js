@@ -5,13 +5,15 @@ const EventContainer = ({ events }) => {
   return (
     <div className="mt-8  justify-center  items-center h-full">
       <div className="flex items-center justify-center">
-        <label className=" flex font-bold text-3xl relative text-black">Events At</label>
-        <label className="flex text-gray-500 text-3xl ml-2 font-bold ">Pune</label>
+        <label className=" flex font-bold text-3xl relative text-black">
+          Events At
+        </label>
+        <label className="flex text-gray-500 text-3xl ml-2 font-bold ">
+          Pune
+        </label>
       </div>
 
-      <div className="flex overflow-x mb-4 px-3 py-3 m-10 bg-transperant">
-        <EventCard />
-        <EventCard />
+      <div className="flex overflow-x-auto mb-4 px-3 py-3 m-10 bg-transperant">
         <EventCard />
       </div>
       <div className="ml-4 cursor-pointer flex items-center justify-center">

@@ -7,12 +7,16 @@ import { Stepper, Step } from "@material-tailwind/react";
 import MapPicker from "react-google-map-picker";
 import axios from "axios";
 import { FaMapMarkedAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const defaultPosition = {
   lat: 18.5204,
   lng: 73.8567,
 };
+
 const CreateEvent = () => {
+  // State variables
   const [showTicketForm, setShowTicketForm] = useState(false);
   const [showDescription, setShowDescription] = useState(false);
   const [showImageUploadForm, setShowImageUploadForm] = useState(false);
@@ -23,26 +27,32 @@ const CreateEvent = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(true);
-  const [organiserFormData, setOrganiserFormData] = useState({
-    organiserName: "",
-    country: "",
-    state: "",
-    individualOrCompany: "",
-  });
+  const [ticketName, setTicketName] = useState("");
+  const [ticketType, setTicketType] = useState("");
+  const [totalSlots, setTotalSlots] = useState(0);
+  const [ticketPrice, setTicketPrice] = useState(0);
+  const [saleEndDate, setSaleEndDate] = useState(new Date());
+  const [organiserName, setOrganiserName] = useState("");
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [individualOrCompany, setIndividualOrCompany] = useState("");
   const [venueAddress, setVenueAddress] = useState("");
   const [address, setAddress] = useState("Pune Maharashtra,India");
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
-
   const [city, setCityName] = useState("");
+  const [location, setLocation] = useState(defaultPosition);
+  const [zoom, setZoom] = useState(10);
 
+  // Array to hold steps
   const steps = [
     "Organizer",
-    "Event Venu",
+    "Event Venue",
     "Description",
     "Image Upload",
     "Ticket",
   ];
 
+  // Function to handle moving to the next step
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
       handleData();
@@ -50,8 +60,85 @@ const CreateEvent = () => {
       setActiveStep(activeStep + 1);
     }
   };
-  const handleNextButtonClick = () => {
-    setShowDescription(true);
+
+  // Function to handle moving back to the previous step
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
+
+  const handleData = async () => {
+    try {
+      const response = await fetch("http://localhost:6005/", {
+        method: "post",
+        body: JSON.stringify({
+          organiserName,
+          country,
+          state,
+          individualOrCompany,
+          venueAddress: city,
+          description: textAreaValue,
+          images: imageFiles.map((file) => file.name),
+          startDate,
+          endDate,
+          ticketName,
+          ticketType,
+          totalSlots,
+          ticketPrice,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+
+      // Show success toast
+      toast.success("Event created successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      // Reset form fields and stepper after success
+      resetForm();
+    } catch (error) {
+      console.error(error);
+      // Show error toast
+      toast.error("Error creating event. Please try again later.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
+  // Function to reset form fields and stepper
+  const resetForm = () => {
+    setOrganiserName("");
+    setCountry("");
+    setState("");
+    setIndividualOrCompany("");
+    setTextAreaValue("");
+    setImageFiles([]);
+    setStartDate(new Date());
+    setEndDate(new Date());
+    setTicketName("");
+    setTicketType("");
+    setTotalSlots(0);
+    setTicketPrice(0);
+    setSaleEndDate(new Date());
+    setCityName("");
+    setLocation(defaultPosition);
+    setZoom(10);
+    setActiveStep(0);
   };
 
   const handleImageUpload = (e) => {
@@ -63,60 +150,28 @@ const CreateEvent = () => {
       setShowTicketForm(true);
     }
   };
-
-  const handleSubmitDescription = (e) => {
-    e.preventDefault();
-    setShowDescription(false);
-    setShowImageUploadForm(true); // Update to show the image upload form
-  };
-
-  const handleBackToImageUpload = () => {
-    setShowDescription(true);
-    setShowTicketForm(false);
-    setShowImageUploadForm(true);
-  };
-
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
-
-  const handleData = () => {
-    // Collect and submit all form data here
-    const allFormData = {
-      ...organiserFormData,
-      textAreaValue: textAreaValue,
-      imageFiles: imageFiles,
-    };
-    console.log("All Form Data:", allFormData);
-    // Perform submission logic here
-  };
-
-  const handleOrganiserFormChange = (e) => {
-    const { name, value } = e.target;
-    setOrganiserFormData({
-      ...organiserFormData,
-      [name]: value,
-    });
-  };
-
+  // Function to handle change in start date
   const handleStartDateChange = (date) => {
     setStartDate(date);
   };
 
+  // Function to handle change in end date
   const handleEndDateChange = (date) => {
     setEndDate(date);
   };
-  const [location, setLocation] = useState(defaultPosition);
-  const [zoom, setZoom] = useState(10);
+
+  // Function to handle change in location
   const handleLocationChange = (lat, lng) => {
     setLocation({ lat: lat, lng: lng });
   };
 
+  // Function to handle change in zoom level
   const handleZoomChange = (newZoom) => {
     setZoom(newZoom);
   };
+
+  // Effect to perform reverse geocoding when location changes
   useEffect(() => {
-    // Perform reverse geocoding here
     axios
       .get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=AIzaSyAcyLx7lr6FJDrQYzv6f5tJP8m8q1UjO6E`
@@ -136,19 +191,24 @@ const CreateEvent = () => {
   return (
     <>
       <div className="flex justify-center">
-        <div className="w-80 p-4">
+        {/* Stepper component */}
+        <div className="w-60 mr-44">
           <Stepper
             activeStep={activeStep}
             isFirstStep={isFirstStep}
             isLastStep={isLastStep}>
             {steps.map((step, index) => (
               <Step key={index} onClick={() => setActiveStep(index)}>
-                {step}
+                {index === activeStep && (
+                  <div className="font-bold mr-96 text-black">{step}</div>
+                )}
               </Step>
             ))}
           </Stepper>
         </div>
-        <div className="w-1/2 p-4 bg-amber-50 border h-auto left-96 mb-80 rounded-2xl">
+
+        {/* Form */}
+        <div className="w-1/2 p-4 bg-amber-50 border h-auto left-96 mb-28 rounded-2xl">
           <form onSubmit={(e) => e.preventDefault()}>
             {activeStep === 0 && (
               <div>
@@ -164,8 +224,8 @@ const CreateEvent = () => {
                   <input
                     type="text"
                     name="organiserName"
-                    value={organiserFormData.organiserName}
-                    onChange={handleOrganiserFormChange}
+                    value={organiserName}
+                    onChange={(e) => setOrganiserName(e.target.value)}
                     className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Enter Organiser name"
                     required="true"
@@ -181,13 +241,18 @@ const CreateEvent = () => {
                     </label>
                   </div>
                   <select
+                    name="country"
+                    value={country}
+                    onChange={(e) => {
+                      setCountry(e.target.value);
+                    }}
                     className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    defaultValue=""
                     required="true">
                     <option value="" disabled>
                       Select country
                     </option>
-                    <option value="option1">India</option>
+                    <option value="India">India</option>
+                    {/* Add other country options here */}
                   </select>
                 </div>
                 <div className="mb-4">
@@ -200,8 +265,12 @@ const CreateEvent = () => {
                     </label>
                   </div>
                   <select
+                    name="state"
+                    value={state}
+                    onChange={(e) => {
+                      setState(e.target.value);
+                    }}
                     className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    defaultValue=""
                     required="true">
                     <option value="" disabled>
                       Select a state
@@ -234,6 +303,7 @@ const CreateEvent = () => {
                     <option value="Uttar Pradesh">Uttar Pradesh</option>
                     <option value="Uttarakhand">Uttarakhand</option>
                     <option value="West Bengal">West Bengal</option>
+                    {/* Add state options here */}
                   </select>
                 </div>
                 <div className="mb-4 flex justify-start ml-10 mt-8">
@@ -241,18 +311,28 @@ const CreateEvent = () => {
                     I am an Individual
                     <input
                       type="radio"
-                      name="radioOption"
+                      name="individualOrCompany"
+                      value="Individual"
+                      checked={individualOrCompany === "Individual"}
+                      onChange={(e) => {
+                        setIndividualOrCompany(e.target.value);
+                      }}
                       className="ml-2"
-                      required
+                      required="true"
                     />
                   </label>
                   <label className="block text-gray-700 text-sm font-bold mb-2">
                     We are a Company
                     <input
                       type="radio"
-                      name="radioOption"
+                      name="individualOrCompany"
+                      value="Company"
+                      checked={individualOrCompany === "Company"}
+                      onChange={(e) => {
+                        setIndividualOrCompany(e.target.value);
+                      }}
                       className="ml-2"
-                      required
+                      required="true"
                     />
                   </label>
                 </div>
@@ -261,7 +341,7 @@ const CreateEvent = () => {
             {activeStep === 1 && (
               <div>
                 {/* Description */}
-                <div className="h-2/5 mb-20">
+                <div className="">
                   <div className="flex mb-2 items-center">
                     <label className="font-bold text-gray-800 mr-1">
                       Event
@@ -270,7 +350,7 @@ const CreateEvent = () => {
                       Venue Address
                     </label>
                   </div>
-                  <div className=" mb-4">
+                  <div className="mb-4">
                     <div className="flex mb-4">
                       <input
                         type="text"
@@ -328,7 +408,7 @@ const CreateEvent = () => {
                         accept="image/*"
                         onChange={handleImageUpload}
                         multiple
-                        required
+                        required="true"
                         className="justify-center"
                       />
                     </div>
@@ -350,7 +430,7 @@ const CreateEvent = () => {
                     onChange={(e) => setTextAreaValue(e.target.value)}
                     className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight h-80 focus:outline-none focus:shadow-outline"
                     placeholder="Enter your description"
-                    required
+                    required="true"
                   />
                 </div>
               </div>
@@ -369,24 +449,57 @@ const CreateEvent = () => {
                     type="text"
                     className="appearance-none border rounded w-8/12 py-2 px-3  text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2"
                     placeholder="Enter ticket name "
+                    onChange={(e) => setTicketName(e.target.value)}
                   />
                 </div>
+                <div className="flex mb-2 items-center">
+                  <label className="font-bold text-black mr-1">Ticket</label>
+                  <label className="block text-gray-500 text-sm font-bold">
+                    Type
+                  </label>
+                </div>
                 <div className="mb-5">
-                  <div className="flex mb-2 items-center">
-                    <label className="font-bold text-black mr-1">Ticket</label>
-                    <label className="block text-gray-500 text-sm font-bold">
-                      Type
+                  <div className="flex items-center mb-2">
+                    <input
+                      type="radio"
+                      id="paidTicket"
+                      name="ticketType"
+                      value="Paid"
+                      checked={ticketType === "Paid"}
+                      onChange={(e) => setTicketType(e.target.value)}
+                      className="mr-2"
+                    />
+                    <label htmlFor="paidTicket" className="text-gray-700 mr-4">
+                      Paid
+                    </label>
+
+                    <input
+                      type="radio"
+                      id="freeTicket"
+                      name="ticketType"
+                      value="Free"
+                      checked={ticketType === "Free"}
+                      onChange={(e) => setTicketType(e.target.value)}
+                      className="mr-2"
+                    />
+                    <label htmlFor="freeTicket" className="text-gray-700 mr-4">
+                      Free
+                    </label>
+
+                    <input
+                      type="radio"
+                      id="donationTicket"
+                      name="ticketType"
+                      value="Donation"
+                      checked={ticketType === "Donation"}
+                      onChange={(e) => setTicketType(e.target.value)}
+                      className="mr-2"
+                      required="true"
+                    />
+                    <label htmlFor="donationTicket" className="text-gray-700">
+                      Donation
                     </label>
                   </div>
-                  <button className="bg-amber-50 hover:bg-stone-500 hover:text-white text-black border font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2">
-                    Paid
-                  </button>
-                  <button className="bg-amber-50 hover:bg-stone-500 hover:text-white border text-black font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2">
-                    Free
-                  </button>
-                  <button className="bg-amber-50 hover:bg-stone-500 hover:text-white border  text-black font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    Donation
-                  </button>
                 </div>
 
                 {/* Second row */}
@@ -405,6 +518,8 @@ const CreateEvent = () => {
                       type="text"
                       className="appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       placeholder="Input Field 2"
+                      required="true"
+                      onChange={(e) => setTotalSlots(e.target.value)}
                     />
                   </div>
                   <div className="flex flex-col w-full">
@@ -421,6 +536,10 @@ const CreateEvent = () => {
                       type="text"
                       className="appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       placeholder="Input Field 2"
+                      required="true"
+                      onChange={(e) => {
+                        setTicketPrice(e.target.value);
+                      }}
                     />
                   </div>
                 </div>
@@ -435,7 +554,7 @@ const CreateEvent = () => {
                             Ticket
                           </label>
                           <label className="block text-gray-500 text-sm font-bold">
-                            Sale end on
+                            Sale stat at
                           </label>
                         </div>
                         <div className="flex">
@@ -461,8 +580,8 @@ const CreateEvent = () => {
                         <div className="flex">
                           <FaRegCalendarAlt className="mt-1 text-xl mr-2" />
                           <DatePicker
-                            selected={startDate}
-                            onChange={handleStartDateChange}
+                            selected={endDate}
+                            onChange={handleEndDateChange}
                             className="mr-2 border"
                           />
                         </div>

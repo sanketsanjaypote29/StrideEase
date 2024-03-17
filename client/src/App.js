@@ -9,12 +9,14 @@ import Login from "./pages/login"; // Import the Register component
 import Dashboard from "./pages/dashboard";
 import CreateEvent from "./pages/createEvent";
 import ViewEventDetails from "./pages/viewEventDetails";
-// import locationDemo from "./locationDemo/demo"
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <>
       <Navbar />
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />

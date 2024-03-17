@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { TERipple } from "tw-elements-react";
-
 import { FaRegShareSquare } from "react-icons/fa";
 import { FcLike } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 
-const EventCard = () => {
+const EventCard = ({ event }) => {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate("/viewEventDetails");
   };
+
   return (
     <div className="block w-96 h-fit ml-16 bg-amber-50 rounded-3xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] shadow-blue-100  dark:bg-white-700">
       <TERipple>
@@ -24,12 +24,12 @@ const EventCard = () => {
           </a>
         </div>
       </TERipple>
-      <div className="p-6">
+      <div className="p-6 m-10">
         <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-black-50">
-          Pune City Marathon 2024
+          {event.ticketName}
         </h5>
         <p className="mb-14 text-base text-neutral-600 dark:text-black-200">
-          March 25 | Baner, Pune
+          {event.description}
         </p>
         <div className="relative flex">
           <button className="text-2xl right-20 bottom-2 absolute">
@@ -40,7 +40,8 @@ const EventCard = () => {
           </button>
           <button
             className="absolute bottom-0 right-0  bg-transperent text-black border hover:bg-pink-400 hover:font-bold hover:text-white px-4 py-2 rounded"
-            onClick={handleClick}>
+            onClick={handleClick}
+          >
             More
           </button>
         </div>
@@ -49,4 +50,30 @@ const EventCard = () => {
   );
 };
 
-export default EventCard;
+const EventList = () => {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const response = await fetch("http://localhost:6005/api/events");
+      const data = await response.json();
+      setEvents(data.events);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
+
+  return (
+    <div className="flex overflow-y" style={{ maxHeight: "500px" }}>
+      {events.map((event) => (
+        <EventCard key={event._id} event={event} />
+      ))}
+    </div>
+  );
+};
+
+export default EventList;

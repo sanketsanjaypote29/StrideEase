@@ -46,3 +46,4 @@ class LocationPickerExample extends Component {
     )
   }
 }
+export default LocationPickerExample;

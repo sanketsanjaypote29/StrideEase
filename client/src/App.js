@@ -9,6 +9,7 @@ import Login from "./pages/login"; // Import the Register component
 import Dashboard from "./pages/dashboard";
 import CreateEvent from "./pages/createEvent";
 import ViewEventDetails from "./pages/viewEventDetails";
+// import locationDemo from "./locationDemo/demo"
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/createevent" element={<CreateEvent />} />
+        <Route path="/location" element={<locationDemo />} />
         <Route path="/viewEventDetails" element={<ViewEventDetails />} />
       </Routes>
     </>

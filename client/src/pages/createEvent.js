@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../components/footer";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Stepper, Step } from "@material-tailwind/react";
-import LocationPickerExample from "./locationPickerExample";
+import MapPicker from "react-google-map-picker";
+import axios from "axios";
+import { FaMapMarkedAlt } from "react-icons/fa";
 
 const defaultPosition = {
-  lat: 27.9878,
-  lng: 86.925,
+  lat: 18.5204,
+  lng: 73.8567,
 };
 const CreateEvent = () => {
   const [showTicketForm, setShowTicketForm] = useState(false);
@@ -21,7 +23,6 @@ const CreateEvent = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(true);
-
   const [organiserFormData, setOrganiserFormData] = useState({
     organiserName: "",
     country: "",
@@ -29,17 +30,10 @@ const CreateEvent = () => {
     individualOrCompany: "",
   });
   const [venueAddress, setVenueAddress] = useState("");
-  const [address, setAddress] = useState(
-    "Kala Pattar Ascent Trail, Khumjung 56000, Nepal"
-  );
+  const [address, setAddress] = useState("Pune Maharashtra,India");
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
 
-  const handleLocationChange = ({ position, address, places }) => {
-    // Set new location
-    console.log("inside get location");
-    setPosition(position);
-    setAddress(address);
-  };
+  const [city, setCityName] = useState("");
 
   const steps = [
     "Organizer",
@@ -112,6 +106,32 @@ const CreateEvent = () => {
   const handleEndDateChange = (date) => {
     setEndDate(date);
   };
+  const [location, setLocation] = useState(defaultPosition);
+  const [zoom, setZoom] = useState(10);
+  const handleLocationChange = (lat, lng) => {
+    setLocation({ lat: lat, lng: lng });
+  };
+
+  const handleZoomChange = (newZoom) => {
+    setZoom(newZoom);
+  };
+  useEffect(() => {
+    // Perform reverse geocoding here
+    axios
+      .get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=AIzaSyAcyLx7lr6FJDrQYzv6f5tJP8m8q1UjO6E`
+      )
+      .then((response) => {
+        const results = response.data.results;
+        if (results && results.length > 0) {
+          const formattedAddress = results[0].formatted_address;
+          setCityName(formattedAddress);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching address:", error);
+      });
+  }, [location]);
 
   return (
     <>
@@ -247,24 +267,39 @@ const CreateEvent = () => {
                       Event
                     </label>
                     <label className="block text-gray-600 text-sm font-bold">
-                      Venue
+                      Venue Address
                     </label>
                   </div>
-                  <div className="flex mb-4">
-                    <label className="appearance-none border rounded w-8/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2">
-                      {venueAddress} {/* Display the venue address here */}
-                    </label>
+                  <div className=" mb-4">
+                    <div className="flex mb-4">
+                      <input
+                        type="text"
+                        className="appearance-none border rounded w-8/12 py-2 px-3  text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2"
+                        placeholder="Enter Venu Address"
+                      />
+                      <div
+                        style={{ display: "flex", alignItems: "center" }}
+                        className="ml-4 border pl-2 pr-2">
+                        <FaMapMarkedAlt style={{ marginRight: "5px" }} />
+                        <div className="text-black font-bold">Use Map</div>
+                      </div>
+                    </div>
                   </div>
                   <div className="flex items-center">
-                    <div className="w-full">
-                      <div>
-                        <h1>{address}</h1>
-                        <div>
-                          <LocationPickerExample
-                            defaultPosition={{ lat: 27.9878, lng: 86.925 }}
-                            handleLocationChange={handleLocationChange}
-                          />
-                        </div>
+                    <div className="flex flex-col w-full">
+                      <label className="appearance-none border rounded w-full py-2 px-3 text-black font-bold leading-tight focus:outline-none focus:shadow-outline mb-2">
+                        Address: {city}
+                      </label>
+                      <div className="mb-5">
+                        {/* LocationPickerExample component */}
+                        <MapPicker
+                          defaultLocation={defaultPosition}
+                          mapTypeId="roadmap"
+                          style={{ height: "350px" }}
+                          onChangeLocation={handleLocationChange}
+                          onChangeZoom={handleZoomChange}
+                          apiKey="AIzaSyAcyLx7lr6FJDrQYzv6f5tJP8m8q1UjO6E"
+                        />
                       </div>
                     </div>
                   </div>
@@ -303,7 +338,7 @@ const CreateEvent = () => {
             )}
             {activeStep === 3 && (
               <div>
-                <div className="mb-2 items-center">
+                <div className="flex mb-2 items-center">
                   <label className="font-bold text-gray-800 mr-1">Enter</label>
                   <label className="block text-gray-600 text-sm font-bold">
                     Description
@@ -314,7 +349,7 @@ const CreateEvent = () => {
                     value={textAreaValue}
                     onChange={(e) => setTextAreaValue(e.target.value)}
                     className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight h-80 focus:outline-none focus:shadow-outline"
-                    placeholder="Enter your message"
+                    placeholder="Enter your description"
                     required
                   />
                 </div>

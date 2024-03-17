@@ -7,9 +7,15 @@ const session = require("express-session");
 const passport = require("passport");
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
 const userdb = require("./models/userSchema");
+const createEvents = require("./models/newEventSchema");
+const eventsRouter = require("./routes/eventRouter");
 require("./db/conn");
 
-const clientId ="1012938867631-7huiqi3vtrsukr7i43v5mfp0n728lbic.apps.googleusercontent.com";
+app.use(express.json());
+app.use("/create", createEvents);
+
+const clientId =
+  "1012938867631-7huiqi3vtrsukr7i43v5mfp0n728lbic.apps.googleusercontent.com";
 const clientSecret = "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";
 
 app.use(
@@ -20,8 +26,14 @@ app.use(
   })
 );
 
-app.use(express.json());
+app.post("/", async (req, res) => {
+  let event = createEvents(req.body);
+  let result = await event.save();
+  res.send(result);
+});
 
+//get data
+app.use("/api", eventsRouter);
 //setuo session
 app.use(
   session({
@@ -97,7 +109,7 @@ app.get("/logout", (req, res, next) => {
       return next(err);
     }
   });
-  res.redirect("http://localhost:3000/home");
+  res.redirect("http://localhost:3000/");
 });
 app.listen(PORT, () => {
   console.log(`server started at port no ${PORT}`);

@@ -10,6 +10,7 @@ import { FaMapMarkedAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 const defaultPosition = {
   lat: 18.5204,
   lng: 73.8567,
@@ -200,24 +201,25 @@ const CreateEvent = () => {
             {steps.map((step, index) => (
               <Step key={index} onClick={() => setActiveStep(index)}>
                 {index === activeStep && (
-                  <div className="font-bold mr-96 text-black">{step}</div>
+                  <div className="font-bold text-black mr-96">{step}</div>
                 )}
               </Step>
             ))}
           </Stepper>
+          
         </div>
 
         {/* Form */}
-        <div className="w-1/2 p-4 bg-amber-50 border h-auto left-96 mb-28 rounded-2xl">
+        <div className="w-1/2 h-auto p-4 border bg-amber-50 left-96 mb-28 rounded-2xl">
           <form onSubmit={(e) => e.preventDefault()}>
             {activeStep === 0 && (
               <div>
                 <div className="mb-4">
-                  <div className="flex mb-2 items-center">
-                    <label className="font-bold text-gray-800 mr-1">
+                  <div className="flex items-center mb-2">
+                    <label className="mr-1 font-bold text-gray-800">
                       Enter
                     </label>
-                    <label className="block text-gray-600 text-sm font-bold">
+                    <label className="block text-sm font-bold text-gray-600">
                       Organiser's Name
                     </label>
                   </div>
@@ -226,17 +228,17 @@ const CreateEvent = () => {
                     name="organiserName"
                     value={organiserName}
                     onChange={(e) => setOrganiserName(e.target.value)}
-                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
                     placeholder="Enter Organiser name"
                     required="true"
                   />
                 </div>
                 <div className="mb-4">
-                  <div className="flex mb-2 items-center">
-                    <label className="font-bold text-gray-800 mr-1">
+                  <div className="flex items-center mb-2">
+                    <label className="mr-1 font-bold text-gray-800">
                       Enter
                     </label>
-                    <label className="block text-gray-600 text-sm font-bold">
+                    <label className="block text-sm font-bold text-gray-600">
                       Country
                     </label>
                   </div>
@@ -246,7 +248,7 @@ const CreateEvent = () => {
                     onChange={(e) => {
                       setCountry(e.target.value);
                     }}
-                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
                     required="true">
                     <option value="" disabled>
                       Select country
@@ -256,11 +258,11 @@ const CreateEvent = () => {
                   </select>
                 </div>
                 <div className="mb-4">
-                  <div className="flex mb-2 items-center">
-                    <label className="font-bold text-gray-800 mr-1">
+                  <div className="flex items-center mb-2">
+                    <label className="mr-1 font-bold text-gray-800">
                       Enter
                     </label>
-                    <label className="block text-gray-600 text-sm font-bold">
+                    <label className="block text-sm font-bold text-gray-600">
                       State
                     </label>
                   </div>
@@ -270,7 +272,7 @@ const CreateEvent = () => {
                     onChange={(e) => {
                       setState(e.target.value);
                     }}
-                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
                     required="true">
                     <option value="" disabled>
                       Select a state
@@ -306,8 +308,8 @@ const CreateEvent = () => {
                     {/* Add state options here */}
                   </select>
                 </div>
-                <div className="mb-4 flex justify-start ml-10 mt-8">
-                  <label className="block text-gray-700 text-sm font-bold mb-2 mr-10">
+                <div className="flex justify-start mt-8 mb-4 ml-10">
+                  <label className="block mb-2 mr-10 text-sm font-bold text-gray-700">
                     I am an Individual
                     <input
                       type="radio"
@@ -321,7 +323,7 @@ const CreateEvent = () => {
                       required="true"
                     />
                   </label>
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                  <label className="block mb-2 text-sm font-bold text-gray-700">
                     We are a Company
                     <input
                       type="radio"
@@ -342,11 +344,11 @@ const CreateEvent = () => {
               <div>
                 {/* Description */}
                 <div className="">
-                  <div className="flex mb-2 items-center">
-                    <label className="font-bold text-gray-800 mr-1">
+                  <div className="flex items-center mb-2">
+                    <label className="mr-1 font-bold text-gray-800">
                       Event
                     </label>
-                    <label className="block text-gray-600 text-sm font-bold">
+                    <label className="block text-sm font-bold text-gray-600">
                       Venue Address
                     </label>
                   </div>
@@ -354,20 +356,20 @@ const CreateEvent = () => {
                     <div className="flex mb-4">
                       <input
                         type="text"
-                        className="appearance-none border rounded w-8/12 py-2 px-3  text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2"
+                        className="w-8/12 px-3 py-2 mr-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
                         placeholder="Enter Venu Address"
                       />
                       <div
                         style={{ display: "flex", alignItems: "center" }}
-                        className="ml-4 border pl-2 pr-2">
+                        className="pl-2 pr-2 ml-4 border">
                         <FaMapMarkedAlt style={{ marginRight: "5px" }} />
-                        <div className="text-black font-bold">Use Map</div>
+                        <div className="font-bold text-black">Use Map</div>
                       </div>
                     </div>
                   </div>
                   <div className="flex items-center">
                     <div className="flex flex-col w-full">
-                      <label className="appearance-none border rounded w-full py-2 px-3 text-black font-bold leading-tight focus:outline-none focus:shadow-outline mb-2">
+                      <label className="w-full px-3 py-2 mb-2 font-bold leading-tight text-black border rounded appearance-none focus:outline-none focus:shadow-outline">
                         Address: {city}
                       </label>
                       <div className="mb-5">
@@ -389,18 +391,18 @@ const CreateEvent = () => {
             {activeStep === 2 && (
               <div>
                 {/* Description */}
-                <div className="  h-80 mb-20">
-                  <div className="flex mb-2 items-center">
-                    <label className="font-bold text-gray-800 mr-1">
+                <div className="mb-20 h-80">
+                  <div className="flex items-center mb-2">
+                    <label className="mr-1 font-bold text-gray-800">
                       Upload
                     </label>
-                    <label className="block text-gray-600 text-sm font-bold">
+                    <label className="block text-sm font-bold text-gray-600">
                       Images
                     </label>
                   </div>
-                  <div className="bg-white h-80 m-5 mb-10 flex justify-center items-center">
+                  <div className="flex items-center justify-center m-5 mb-10 bg-white h-80">
                     <div>
-                      <label className="block text-gray-600 text-sm font-demiboldmb-2">
+                      <label className="block text-sm text-gray-600 font-demiboldmb-2">
                         Upload Cover Picture For The Event You are Organizing
                       </label>
                       <input
@@ -418,9 +420,9 @@ const CreateEvent = () => {
             )}
             {activeStep === 3 && (
               <div>
-                <div className="flex mb-2 items-center">
-                  <label className="font-bold text-gray-800 mr-1">Enter</label>
-                  <label className="block text-gray-600 text-sm font-bold">
+                <div className="flex items-center mb-2">
+                  <label className="mr-1 font-bold text-gray-800">Enter</label>
+                  <label className="block text-sm font-bold text-gray-600">
                     Description
                   </label>
                 </div>
@@ -428,7 +430,7 @@ const CreateEvent = () => {
                   <textarea
                     value={textAreaValue}
                     onChange={(e) => setTextAreaValue(e.target.value)}
-                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight h-80 focus:outline-none focus:shadow-outline"
+                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none h-80 focus:outline-none focus:shadow-outline"
                     placeholder="Enter your description"
                     required="true"
                   />
@@ -437,9 +439,9 @@ const CreateEvent = () => {
             )}
             {activeStep === 4 && (
               <div>
-                <div className="flex mb-2 items-center">
-                  <label className="font-bold text-black mr-1">Ticket</label>
-                  <label className="block text-gray-500 text-sm font-bold">
+                <div className="flex items-center mb-2">
+                  <label className="mr-1 font-bold text-black">Ticket</label>
+                  <label className="block text-sm font-bold text-gray-500">
                     Name
                   </label>
                 </div>
@@ -447,14 +449,14 @@ const CreateEvent = () => {
                 <div className="flex mb-4">
                   <input
                     type="text"
-                    className="appearance-none border rounded w-8/12 py-2 px-3  text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2"
+                    className="w-8/12 px-3 py-2 mr-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
                     placeholder="Enter ticket name "
                     onChange={(e) => setTicketName(e.target.value)}
                   />
                 </div>
-                <div className="flex mb-2 items-center">
-                  <label className="font-bold text-black mr-1">Ticket</label>
-                  <label className="block text-gray-500 text-sm font-bold">
+                <div className="flex items-center mb-2">
+                  <label className="mr-1 font-bold text-black">Ticket</label>
+                  <label className="block text-sm font-bold text-gray-500">
                     Type
                   </label>
                 </div>
@@ -469,7 +471,7 @@ const CreateEvent = () => {
                       onChange={(e) => setTicketType(e.target.value)}
                       className="mr-2"
                     />
-                    <label htmlFor="paidTicket" className="text-gray-700 mr-4">
+                    <label htmlFor="paidTicket" className="mr-4 text-gray-700">
                       Paid
                     </label>
 
@@ -482,7 +484,7 @@ const CreateEvent = () => {
                       onChange={(e) => setTicketType(e.target.value)}
                       className="mr-2"
                     />
-                    <label htmlFor="freeTicket" className="text-gray-700 mr-4">
+                    <label htmlFor="freeTicket" className="mr-4 text-gray-700">
                       Free
                     </label>
 
@@ -507,34 +509,34 @@ const CreateEvent = () => {
                 <div className="flex mb-4">
                   <div className="flex flex-col w-full">
                     {/* Wrap second input field and label in a div with flex direction column */}
-                    <div className="flex mb-2 items-center">
-                      <label className="font-bold text-black mr-1">Total</label>
-                      <label className="block text-gray-500 text-sm font-bold">
+                    <div className="flex items-center mb-2">
+                      <label className="mr-1 font-bold text-black">Total</label>
+                      <label className="block text-sm font-bold text-gray-500">
                         Slots For Event
                       </label>
                     </div>
                     {/* Move the label above the input field */}
                     <input
                       type="text"
-                      className="appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      className="px-3 py-2 leading-tight text-gray-700 border rounded appearance-none w-80 focus:outline-none focus:shadow-outline"
                       placeholder="Input Field 2"
                       required="true"
                       onChange={(e) => setTotalSlots(e.target.value)}
                     />
                   </div>
                   <div className="flex flex-col w-full">
-                    <div className="flex mb-2 items-center">
-                      <label className="font-bold text-black mr-1">
+                    <div className="flex items-center mb-2">
+                      <label className="mr-1 font-bold text-black">
                         Ticket
                       </label>
-                      <label className="block text-gray-500 text-sm font-bold">
+                      <label className="block text-sm font-bold text-gray-500">
                         Price
                       </label>
                     </div>
                     {/* Move the label above the input field */}
                     <input
                       type="text"
-                      className="appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      className="px-3 py-2 leading-tight text-gray-700 border rounded appearance-none w-80 focus:outline-none focus:shadow-outline"
                       placeholder="Input Field 2"
                       required="true"
                       onChange={(e) => {
@@ -545,20 +547,20 @@ const CreateEvent = () => {
                 </div>
 
                 {/* Third row */}
-                <div className="mb-4 h-20">
-                  <div className="mt-8 bg-amber-50 w-full h-auto left-96 rounded-2xl">
+                <div className="h-20 mb-4">
+                  <div className="w-full h-auto mt-8 bg-amber-50 left-96 rounded-2xl">
                     <div className="flex mb-4">
                       <div className="flex flex-col mr-20">
-                        <div className="flex mb-2 items-center">
-                          <label className="font-bold text-black mr-1">
+                        <div className="flex items-center mb-2">
+                          <label className="mr-1 font-bold text-black">
                             Ticket
                           </label>
-                          <label className="block text-gray-500 text-sm font-bold">
+                          <label className="block text-sm font-bold text-gray-500">
                             Sale stat at
                           </label>
                         </div>
                         <div className="flex">
-                          <FaRegCalendarAlt className="mt-1 text-xl mr-2" />
+                          <FaRegCalendarAlt className="mt-1 mr-2 text-xl" />
                           <DatePicker
                             selected={startDate}
                             onChange={handleStartDateChange}
@@ -568,17 +570,17 @@ const CreateEvent = () => {
                       </div>
 
                       <div className="flex flex-col ">
-                        <div className="flex mb-2 items-center">
-                          <label className="font-bold text-black mr-1">
+                        <div className="flex items-center mb-2">
+                          <label className="mr-1 font-bold text-black">
                             Ticket
                           </label>
-                          <label className="block text-gray-500 text-sm font-bold">
+                          <label className="block text-sm font-bold text-gray-500">
                             Sale end on
                           </label>
                         </div>
 
                         <div className="flex">
-                          <FaRegCalendarAlt className="mt-1 text-xl mr-2" />
+                          <FaRegCalendarAlt className="mt-1 mr-2 text-xl" />
                           <DatePicker
                             selected={endDate}
                             onChange={handleEndDateChange}
@@ -596,14 +598,14 @@ const CreateEvent = () => {
                 <button
                   type="button"
                   onClick={handleBack}
-                  className="bg-amber-50 hover:bg-red-400  hover:text-white text-black border font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline mr-2">
+                  className="px-4 py-2 mr-2 font-semibold text-black border rounded-lg bg-amber-50 hover:bg-red-400 hover:text-white focus:outline-none focus:shadow-outline">
                   Back
                 </button>
               )}
               <button
                 type="submit"
                 onClick={handleNext}
-                className="bg-amber-50 hover:bg-blue-500  hover:text-white text-black border font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">
+                className="px-4 py-2 font-semibold text-black border rounded-lg bg-amber-50 hover:bg-blue-500 hover:text-white focus:outline-none focus:shadow-outline">
                 {activeStep === steps.length - 1 ? "Submit" : "Next"}
               </button>
             </div>

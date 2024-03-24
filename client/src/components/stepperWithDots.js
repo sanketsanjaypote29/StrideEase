@@ -10,17 +10,17 @@ export function StepperWithDots() {
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
  
   return (
-    <div className="w-full py-4 px-8">
+    <div className="w-full px-8 py-4">
       <Stepper
         activeStep={activeStep}
         isLastStep={(value) => setIsLastStep(value)}
         isFirstStep={(value) => setIsFirstStep(value)}
       >
-        <Step className="h-4 w-4" onClick={() => setActiveStep(0)} />
-        <Step className="h-4 w-4" onClick={() => setActiveStep(1)} />
-        <Step className="h-4 w-4" onClick={() => setActiveStep(2)} />
+        <Step className="w-4 h-4" onClick={() => setActiveStep(0)} />
+        <Step className="w-4 h-4" onClick={() => setActiveStep(1)} />
+        <Step className="w-4 h-4" onClick={() => setActiveStep(2)} />
       </Stepper>
-      <div className="mt-16 flex justify-between">
+      <div className="flex justify-between mt-16">
         <Button onClick={handlePrev} disabled={isFirstStep}>
           Prev
         </Button>

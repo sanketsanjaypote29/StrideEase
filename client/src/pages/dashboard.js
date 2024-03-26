@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import EventFilter from "../components/eventFilter";
 import EventContainer from "../components/eventContainer";
 import Footer from "../components/footer";
+import Navbar from "../components/navBars/dashboardNav";
 const Dashboard = () => {
   const navigate = useNavigate();
   const getUser = async () => {
@@ -22,6 +23,7 @@ const Dashboard = () => {
   }, []);
   return (
     <div className="h-full overflow-x-hidden">
+      <Navbar/>
       <EventFilter />
       <EventContainer />
       <Footer />

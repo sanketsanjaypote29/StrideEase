@@ -10,12 +10,14 @@ import Dashboard from "./pages/dashboard";
 import CreateEvent from "./pages/createEvent";
 import ViewEventDetails from "./pages/viewEventDetails";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import RegisteredEvent from "./pages/registeredEvents";
+import CheckOutPage from "./pages/checkOutPage";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <>
-      <Navbar />
+      
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -24,7 +26,12 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/createevent" element={<CreateEvent />} />
         <Route path="/location" element={<locationDemo />} />
-        <Route path="/viewEventDetails" element={<ViewEventDetails />} />
+        <Route
+          path="/viewEventDetails/:eventId"
+          element={<ViewEventDetails />}
+        />
+        <Route path="/registeredEvent" element={<RegisteredEvent />} />
+        <Route path="/checkOut/:eventId" element={<CheckOutPage />} />
       </Routes>
     </>
   );

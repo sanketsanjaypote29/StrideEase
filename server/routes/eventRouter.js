@@ -18,5 +18,19 @@ router.get('/events', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+router.get('/events/:eventId', async (req, res) => {
+  try {
+    const eventId = req.params.eventId;
+    const event = await newEvent.findById(eventId);
 
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    res.status(200).json({ message: 'Event found', event });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 module.exports = router;

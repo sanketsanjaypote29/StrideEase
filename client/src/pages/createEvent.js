@@ -9,6 +9,8 @@ import axios from "axios";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./stepper.css";
+import CreateEventNav from "../components/navBars/CreateEventNav";
 
 const defaultPosition = {
   lat: 18.5204,
@@ -84,6 +86,10 @@ const CreateEvent = () => {
           ticketType,
           totalSlots,
           ticketPrice,
+          venueLocation: {
+            type: 'Point',
+            coordinates: [location.lng, location.lat],
+          },
         }),
         headers: {
           "Content-Type": "application/json",
@@ -188,33 +194,44 @@ const CreateEvent = () => {
       });
   }, [location]);
 
-  const activeColor = (index) => activeStep >= index ? 'bg-blue-500' : 'bg-gray-300';
+  const activeColor = (index) =>
+    activeStep >= index ? "bg-blue-500" : "bg-gray-300";
   const isFinalStep = (index) => index === 5 - 1;
-
 
   return (
     <>
+    <CreateEventNav/>
       <div className="flex flex-col items-center justify-center">
         {/* Stepper component */}
         <div className="w-full px-24 py-4 mx-10 mb-16 ">
           <Stepper
             activeStep={activeStep}
             isFirstStep={isFirstStep}
-            isLastStep={isLastStep}
-          >
+            isLastStep={isLastStep}>
             {steps.map((step, index) => (
-              <Step key={index} onClick={() => setActiveStep(index)}>
+              <Step
+                className="bg-transperent"
+                key={index}
+                onClick={() => setActiveStep(index)}>
                 {index === activeStep && (
                   <>
-                    <span className={`w-6 h-6 px-0 font-medium text-center text-white  rounded-full text-md ${activeColor(index)}`} >
+                    <span
+                      className={`w-6 h-6 px-0 font-medium text-center text-white  rounded-full text-md ${activeColor(
+                        index
+                      )}`}>
                       {index + 1}
                     </span>
-                    {isFinalStep(index) ? null :<div className="mt-2 text-gray-800">{step}</div>}
+                    {isFinalStep(index) ? null : (
+                      <div className="mt-2  text-gray-800">{step}</div>
+                    )}
                   </>
                 )}
                 {index !== activeStep && (
                   <>
-                    <span className={`w-6 h-6 font-medium text-center text-white rounded-full text-md ${activeColor(index)}`}>
+                    <span
+                      className={`w-6 h-6 font-medium text-center text-white rounded-full text-md ${activeColor(
+                        index
+                      )}`}>
                       {index + 1}
                     </span>
                     <div className="text-gray-400 ">{step}</div>
@@ -265,8 +282,7 @@ const CreateEvent = () => {
                       setCountry(e.target.value);
                     }}
                     className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
-                    required="true"
-                  >
+                    required="true">
                     <option value="" disabled>
                       Select country
                     </option>
@@ -290,8 +306,7 @@ const CreateEvent = () => {
                       setState(e.target.value);
                     }}
                     className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
-                    required="true"
-                  >
+                    required="true">
                     <option value="" disabled>
                       Select a state
                     </option>
@@ -379,8 +394,7 @@ const CreateEvent = () => {
                       />
                       <div
                         style={{ display: "flex", alignItems: "center" }}
-                        className="pl-2 pr-2 ml-4 border"
-                      >
+                        className="pl-2 pr-2 ml-4 border">
                         <FaMapMarkedAlt style={{ marginRight: "5px" }} />
                         <div className="font-bold text-black">Use Map</div>
                       </div>
@@ -617,16 +631,14 @@ const CreateEvent = () => {
                 <button
                   type="button"
                   onClick={handleBack}
-                  className="px-4 py-2 mr-2 font-semibold text-black border rounded-lg bg-amber-50 hover:bg-red-400 hover:text-white focus:outline-none focus:shadow-outline"
-                >
+                  className="px-4 py-2 mr-2 font-semibold text-black border rounded-lg bg-amber-50 hover:bg-red-400 hover:text-white focus:outline-none focus:shadow-outline">
                   Back
                 </button>
               )}
               <button
                 type="submit"
                 onClick={handleNext}
-                className="px-4 py-2 font-semibold text-black border rounded-lg bg-amber-50 hover:bg-blue-500 hover:text-white focus:outline-none focus:shadow-outline"
-              >
+                className="px-4 py-2 font-semibold text-black border rounded-lg bg-amber-50 hover:bg-blue-500 hover:text-white focus:outline-none focus:shadow-outline">
                 {activeStep === steps.length - 1 ? "Submit" : "Next"}
               </button>
             </div>

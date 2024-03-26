@@ -10,7 +10,7 @@ mongoose.connect(DB,{
     dbConn = mongoose.connection;
     console.log("Database connection successfull")
 }).catch((err)=>{
-    console.log("connection failed")
+    console.log("connection failed because: ",err)
 })
 
 const getdbConn = () => {

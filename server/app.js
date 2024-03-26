@@ -9,6 +9,7 @@ const OAuth2Strategy = require("passport-google-oauth2").Strategy;
 const userdb = require("./models/userSchema");
 const createEvents = require("./models/newEventSchema");
 const eventsRouter = require("./routes/eventRouter");
+
 require("./db/conn");
 
 app.use(express.json());
@@ -96,7 +97,7 @@ app.get(
   })
 );
 
-app.use('/api',require('./routes/auth'));
+app.use("/api", require("./routes/auth"));
 
 app.get("/login/sucess", async (req, res) => {
   if (req.user) {

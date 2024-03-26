@@ -13,7 +13,7 @@ const EventContainer = ({ events }) => {
         </label>
       </div>
 
-      <div className="flex overflow-x-auto mb-4 px-3 py-3 m-10 bg-transperant">
+      <div className="flex overflow-x-scroll no-scrollbar mb-10 px-3 py-3 mt-8 ">
         <EventCard />
       </div>
       <div className="ml-4 cursor-pointer flex items-center justify-center">

@@ -6,7 +6,7 @@ import axios from 'axios'
 
 const Login = () => {
   const loginWithGoogle = () => {
-    window.open("http://localhost:6005/auth/google/callback",);
+    window.open("http://localhost:6005/auth/google/callback",'_blank');
   };
 
   const [email, setEmail] = useState("")

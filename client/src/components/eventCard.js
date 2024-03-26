@@ -7,13 +7,13 @@ import { useNavigate } from "react-router-dom";
 const EventCard = ({ event }) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/viewEventDetails");
+    navigate(`/viewEventDetails/${event._id}`);
   };
 
   return (
-    <div className="block w-96 h-fit ml-16 bg-amber-50 rounded-3xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] shadow-blue-100  dark:bg-white-700">
+    <div className="block w-96 h-fit ml-16 bg-amber-50 rounded-3xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] shadow-blue-100  hover:shadow-pink-200 dark:bg-white-700">
       <TERipple>
-        <div className="relative overflow-hidden bg-cover bg-no-repeat">
+        <div className="relative overflow bg-covee bg-no-repeat">
           <img
             className="rounded-t-3xl"
             src="https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg"
@@ -28,20 +28,19 @@ const EventCard = ({ event }) => {
         <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-black-50">
           {event.ticketName}
         </h5>
-        <p className="mb-14 text-base text-neutral-600 dark:text-black-200">
+        <div className="overflow-hidden whitespace-nowrap text-ellipsis p-1">
           {event.description}
-        </p>
-        <div className="relative flex">
-          <button className="text-2xl right-20 bottom-2 absolute">
+        </div>
+        <div className="relative flex bottom-2">
+          <button className="text-2xl right-20 absolute ml-2 mt-2">
             <FcLike />
           </button>
-          <button className="text-2xl right-28 bottom-2 absolute">
+          <button className="text-2xl right-28 mt-2 ml-2 absolute">
             <FaRegShareSquare />
           </button>
           <button
-            className="absolute bottom-0 right-0  bg-transperent text-black border hover:bg-pink-400 hover:font-bold hover:text-white px-4 py-2 rounded"
-            onClick={handleClick}
-          >
+            className="absolute  right-0  bg-transperent text-black border hover:bg-pink-400 hover:font-bold hover:text-white px-4 py-2 rounded"
+            onClick={handleClick}>
             More
           </button>
         </div>

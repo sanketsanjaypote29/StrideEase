@@ -1,5 +1,4 @@
-import React, {useState} from "react";
-import { FcGoogle } from "react-icons/fc";
+import React, { useState } from "react";
 import { IoCreate } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -9,22 +8,20 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const  registerUser = async (e) =>{
+  const registerUser = async (e) => {
     e.preventDefault();
-    try{
-      const response = await axios.post('http://localhost:6005/api/register',{
-        username,email,password
+    try {
+      const response = await axios.post("http://localhost:6005/api/register", {
+        username,
+        email,
+        password,
       });
-      
-    } catch(error){
+    } catch (error) {
+      console.log("inside catch block");
       console.error(error);
     }
-    
   };
 
-
-
-  
   return (
     <div className="grid grid-cols-2 gap-4">
       {/* Left container with SVG */}
@@ -37,7 +34,7 @@ const Register = () => {
       </div>
 
       <div className="flex justify-center h-full p-4 mt-10 ml-20 rounded-lg shadow-lg w-96 bg-white-50 shadow-blue-950">
-        <form className="w-72" onSubmit={registerUser} >
+        <form className="w-72" onSubmit={registerUser}>
           <div className="mt-10 mb-5">
             <div className="relative w-full min-w-[200px] h-10">
               <input
@@ -77,11 +74,12 @@ const Register = () => {
             </div>
           </div>
           <div className="flex justify-center">
-            <button type="submit" className="flex items-center px-4 py-2 text-black bg-transparent border rounded-full hover:border-blue-800 mt-11">
+            <button
+              type="submit"
+              className="flex items-center px-4 py-2 text-black bg-transparent border rounded-full hover:border-blue-800 mt-11">
               <div className="mr-2">
                 {" "}
-                {/* Wrapper div for spacing */}
-                <IoCreate /> {/* Add the Google icon */}
+                <IoCreate />
               </div>
               Create
             </button>

@@ -10,6 +10,7 @@ import { FaMapMarkedAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./stepper.css";
+import { useNavigate } from "react-router-dom";
 import CreateEventNav from "../components/navBars/CreateEventNav";
 
 const defaultPosition = {
@@ -44,7 +45,23 @@ const CreateEvent = () => {
   const [city, setCityName] = useState("");
   const [location, setLocation] = useState(defaultPosition);
   const [zoom, setZoom] = useState(10);
+  const navigate = useNavigate();
 
+  //want to get the googleId of the user in local storage
+  const getUser = async () => {
+    try {
+      const response = await axios.get("http://localhost:6005/login/sucess", {
+        withCredentials: true,
+      });
+      console.log(response);
+      localStorage.setItem("googleId", response.data.user.googleId);
+    } catch (error) {
+      navigate("/login");
+    }
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
   // Array to hold steps
   const steps = [
     "Organizer",
@@ -67,12 +84,15 @@ const CreateEvent = () => {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+  // console.log("Google Id:", response.data.user.googleId);
 
   const handleData = async () => {
+    const googleId = localStorage.getItem("googleId");
     try {
       const response = await fetch("http://localhost:6005/", {
         method: "post",
         body: JSON.stringify({
+          googleId,
           organiserName,
           country,
           state,
@@ -87,7 +107,7 @@ const CreateEvent = () => {
           totalSlots,
           ticketPrice,
           venueLocation: {
-            type: 'Point',
+            type: "Point",
             coordinates: [location.lng, location.lat],
           },
         }),
@@ -200,7 +220,7 @@ const CreateEvent = () => {
 
   return (
     <>
-    <CreateEventNav/>
+      <CreateEventNav />
       <div className="flex flex-col items-center justify-center">
         {/* Stepper component */}
         <div className="w-full px-24 py-4 mx-10 mb-16 ">

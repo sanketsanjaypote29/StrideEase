@@ -9,7 +9,26 @@ import { useNavigate } from "react-router-dom";
 
 const registeredEventCard = ({ event }) => {
   //   const navigate = useNavigate();
-
+  const handleDelete = () => {
+    // Implement the logic to delete the event here
+    console.log("Deleting event:", event);
+    // You can make a fetch request to your backend to delete the event
+    Example: fetch(`http://localhost:6005/api/events/${event._id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Event deleted successfully, you may want to update state or show a message
+          console.log("Event deleted successfully");
+        } else {
+          // Error occurred while deleting the event
+          console.error("Error deleting event");
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting event:", error);
+      });
+  };
   return (
     <>
       <div className="block w-96 h-fit ml-16 bg-amber-50 rounded-3xl mb-10 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] shadow-blue-100  hover:shadow-pink-200 dark:bg-white-700">
@@ -28,11 +47,11 @@ const registeredEventCard = ({ event }) => {
         <div className="p-6 m-10">
           <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-black-50">
             {/* {event.ticketName} */}
-            Pune Marathon 2020
+            {event.ticketName}
           </h5>
           <p className="mb-14 text-base text-neutral-600 dark:text-black-200">
             {/* {event.description} */}
-            Demo description
+            {event.description}
           </p>
           <div className="relative flex">
             <div className="flex items-center bottom-2">
@@ -46,7 +65,10 @@ const registeredEventCard = ({ event }) => {
                 Edit
               </button>
             </div>
-            <button className="text-2xl right-0 m-auto items-center bottom-2 absolute">
+            <button
+              className="text-2xl right-0 m-auto items-center bottom-2 absolute"
+              onClick={handleDelete} // Add onClick event handler to trigger delete
+            >
               <IoTrashOutline />
             </button>
           </div>

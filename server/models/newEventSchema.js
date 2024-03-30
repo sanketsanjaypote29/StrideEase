@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const newEventSchema = new mongoose.Schema({
+  googleId: {
+    type: String,
+    required: true,
+  },
   organiserName: {
     type: String,
     required: true,

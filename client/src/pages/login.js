@@ -20,6 +20,7 @@ const Login = () => {
           'Content-Type': 'application/json',
         }},);
         console.log(response.data);
+        localStorage.setItem("googleId", response.data.user.googleId);
     } catch (error) {
       console.error(error);
     }

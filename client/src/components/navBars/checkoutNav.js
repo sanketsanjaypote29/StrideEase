@@ -12,6 +12,7 @@ import { IoMdSettings } from "react-icons/io";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { RxCross1 } from "react-icons/rx";
+import { MdDashboard } from "react-icons/md";
 
 const CheckoutNav = () => {
   const navigate = useNavigate();
@@ -32,6 +33,8 @@ const CheckoutNav = () => {
   const [showModal, setShowModal] = useState(false);
 
   const menuItems = [
+    { icon: <MdDashboard size={25} className="mr-4" />, text: "Dashboard" },
+    
     { icon: <IoCreate size={25} className="mr-4" />, text: "Create New Event" },
     {
       icon: <BsCalendar2EventFill size={25} className="mr-4" />,
@@ -109,6 +112,8 @@ const CheckoutNav = () => {
                           navigate("/createevent");
                         } else if (text === "Your Registered Event") {
                           navigate("/registeredEvent");
+                        }else if(text==="Dashboard"){
+                          navigate("/dashboard");
                         }
                       }}>
                       {icon} {text}

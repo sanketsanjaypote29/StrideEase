@@ -59,12 +59,16 @@ const EventList = () => {
   const fetchEvents = async () => {
     try {
       const response = await fetch("http://localhost:6005/api/events");
-      const data = await response.json();
+      const data = await response.json(); // Fix: extract the JSON data
       setEvents(data.events);
     } catch (error) {
       console.error("Error fetching events:", error);
     }
   };
+
+  if (events === undefined) {
+    return <div>Loading events...</div>; // Display a loading message while fetching events
+  }
 
   return (
     <div className="flex overflow-y" style={{ maxHeight: "500px" }}>

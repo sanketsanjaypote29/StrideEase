@@ -66,4 +66,24 @@ router.delete("/events/:eventId", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+router.put("/events/:eventId", async (req, res) => {
+  const eventId = req.params.eventId;
+  const eventDataToUpdate = req.body;
+  console.log(eventDataToUpdate);
+  try {
+    const updatedEvent = await Event.findByIdAndUpdate(
+      eventId,
+      eventDataToUpdate,
+      { new: true }
+    );
+    res.json({
+      success: true,
+      message: "Event updated successfully",
+      event: updatedEvent,
+    });
+  } catch (error) {
+    console.error("Error updating event:", error);
+    res.status(500).json({ success: false, message: "Failed to update event" });
+  }
+});
 module.exports = router;

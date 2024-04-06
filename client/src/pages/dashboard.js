@@ -13,7 +13,7 @@ const Dashboard = () => {
       const response = await axios.get("http://localhost:6005/login/sucess", {
         withCredentials: true,
       });
-      console.log(response);
+      // console.log(response);
       localStorage.setItem("googleId", response.data.user.googleId);
     } catch (error) {
       navigate("/login");

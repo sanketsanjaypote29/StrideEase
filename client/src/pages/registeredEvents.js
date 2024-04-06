@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Footer from "../components/footer";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/navBars/RegisteredEventNav";
 import RegisteredEventCard from "../components/registeredEventCard";
 
 const RegisteredEvents = () => {
@@ -48,19 +49,19 @@ const RegisteredEvents = () => {
 
   return (
     <>
-      <div className="flex h-fit mb-16 mt-16 overflow-x-scroll no-scrollbar ">
+    <Navbar />
+      <div className="flex h-fit  mb-16 mt-16 overflow-x-scroll no-scrollbar ">
         {loading ? (
           <p>Loading...</p>
         ) : events === undefined ? (
-          <div className="border h-96 w-96 bg-amber-50 font-bold items-center ml-96 rounded-lg justify-center">
-            <p className="ml-10 mt-36">
+          <div className="border h-96 w-svw bg-amber-50 font-bold items-center  rounded-lg justify-center">
+            <p className="ml-96  mt-36">
               You haven't created any events yet. Create an event first.
             </p>
             <div>
               <button
-                className="text-xl border flex items-center m-5 p-2 rounded-lg bg-amber-50 hover:bg-blue-400 hover:text-white  text-black ml-28 mr-16"
-                onClick={handleClick}
-              >
+                className="text-xl border flex items-center m-5 p-2 rounded-lg bg-amber-50 hover:bg-blue-400 hover:text-white  text-black ml-96 mr-16"
+                onClick={handleClick}>
                 Create Event
               </button>
             </div>

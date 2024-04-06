@@ -7,8 +7,8 @@ import { IoTrashOutline } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const registeredEventCard = ({ event }) => {
-  //   const navigate = useNavigate();
+const RegisteredEventCard = ({ event }) => {
+  const navigate = useNavigate();
   const handleDelete = () => {
     // Implement the logic to delete the event here
     console.log("Deleting event:", event);
@@ -28,6 +28,11 @@ const registeredEventCard = ({ event }) => {
       .catch((error) => {
         console.error("Error deleting event:", error);
       });
+      //refresh the page
+      window.location.reload();
+  };
+  const handleEditButtonClick = () => {
+    navigate(`/editevent/${event._id}`);
   };
   return (
     <>
@@ -60,7 +65,9 @@ const registeredEventCard = ({ event }) => {
             </div>
 
             <div className="flex ">
-              <button className="text-xl border flex items-center m-auto p-2 rounded-lg bg-amber-50 hover:bg-blue-400 hover:text-white  text-black ml-16 mr-16">
+              <button
+                className="text-xl border flex items-center m-auto p-2 rounded-lg bg-amber-50 hover:bg-blue-400 hover:text-white  text-black ml-16 mr-16"
+                onClick={handleEditButtonClick}>
                 <FaRegEdit className="mr-2" />
                 Edit
               </button>
@@ -78,4 +85,4 @@ const registeredEventCard = ({ event }) => {
   );
 };
 
-export default registeredEventCard;
+export default RegisteredEventCard;

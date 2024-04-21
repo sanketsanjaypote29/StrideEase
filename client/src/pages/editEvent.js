@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./stepper.css";
 import { useNavigate, useParams } from "react-router-dom";
 import CreateEventNav from "../components/navBars/CreateEventNav";
+import { BASE_URL } from "./helper";
 
 const defaultPosition = {
   lat: 18.5204,
@@ -53,7 +54,7 @@ const EditEvent = () => {
   // console.log(event);
   const getUser = async () => {
     try {
-      const response = await axios.get("http://localhost:6005/login/sucess", {
+      const response = await axios.get(`${BASE_URL}/login/sucess`, {
         withCredentials: true,
       });
       console.log(response);
@@ -70,7 +71,7 @@ const EditEvent = () => {
     const fetchEventDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:6005/api/events/${eventId}`
+          `${BASE_URL}/api/events/${eventId}`
         );
         const data = response.data.event;
         setEvent(data);
@@ -168,7 +169,7 @@ const EditEvent = () => {
   const updateEventData = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:6005/api/events/${eventId}`,
+        `${BASE_URL}/api/events/${eventId}`,
         event
       );
       console.log(response.data); // Log the response from the server

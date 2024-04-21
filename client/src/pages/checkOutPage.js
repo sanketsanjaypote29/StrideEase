@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CheckoutNav, { checkoutNav } from "../components/navBars/checkoutNav";
 import { FaPlus } from "react-icons/fa6";
+import { BASE_URL } from "./helper";
 
 const CheckOutPage = () => {
   const navigate = useNavigate();
@@ -18,9 +19,7 @@ const CheckOutPage = () => {
   console.log("event id:", eventId);
   const fetchEventDetails = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:6005/api/events/${eventId}`
-      );
+      const response = await fetch(`${BASE_URL}/api/events/${eventId}`);
       if (!response.ok) {
         throw new Error("Failed to fetch event details");
       }
@@ -62,7 +61,7 @@ const CheckOutPage = () => {
   }
   return (
     <>
-      <CheckoutNav/>
+      <CheckoutNav />
       <div className="flex mt-10">
         <div className="ml-5 h-auto w-10/12">
           <div className="border bg-amber-50 h-48 w-11/12 ml-10 rounded-lg shadow-lg shadow-blue-300 m-5">

@@ -3,6 +3,7 @@ import { TERipple } from "tw-elements-react";
 import { FaRegShareSquare } from "react-icons/fa";
 import { FcLike } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../pages/helper";
 
 const EventCard = ({ event }) => {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ const EventList = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch("http://localhost:6005/api/events");
+      const response = await fetch(`${BASE_URL}/api/events`);
       const data = await response.json(); // Fix: extract the JSON data
       setEvents(data.events);
     } catch (error) {

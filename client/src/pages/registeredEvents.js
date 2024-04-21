@@ -3,6 +3,7 @@ import Footer from "../components/footer";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navBars/RegisteredEventNav";
 import RegisteredEventCard from "../components/registeredEventCard";
+import { BASE_URL } from "./helper";
 
 const RegisteredEvents = () => {
   const [events, setEvents] = useState([]);
@@ -14,7 +15,7 @@ const RegisteredEvents = () => {
       try {
         const googleId = localStorage.getItem("googleId");
         const response = await fetch(
-          `http://localhost:6005/api/events/googleId/${googleId}`
+          `${BASE_URL}/api/events/googleId/${googleId}`
         );
         const data = await response.json();
         setEvents(data.events);
@@ -36,7 +37,7 @@ const RegisteredEvents = () => {
   const handleEventDelete = async (eventId) => {
     try {
       // Make a DELETE request to delete the event
-      await fetch(`http://localhost:6005/api/events/${eventId}`, {
+      await fetch(`${BASE_URL}/api/events/${eventId}`, {
         method: "DELETE",
       });
 
@@ -49,7 +50,7 @@ const RegisteredEvents = () => {
 
   return (
     <>
-    <Navbar />
+      <Navbar />
       <div className="flex h-fit  mb-16 mt-16 overflow-x-scroll no-scrollbar ">
         {loading ? (
           <p>Loading...</p>

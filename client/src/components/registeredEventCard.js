@@ -6,6 +6,7 @@ import { LuEye } from "react-icons/lu";
 import { IoTrashOutline } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../pages/helper";
 
 const RegisteredEventCard = ({ event }) => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const RegisteredEventCard = ({ event }) => {
     // Implement the logic to delete the event here
     console.log("Deleting event:", event);
     // You can make a fetch request to your backend to delete the event
-    Example: fetch(`http://localhost:6005/api/events/${event._id}`, {
+    Example: fetch(`${BASE_URL}/api/events/${event._id}`, {
       method: "DELETE",
     })
       .then((response) => {

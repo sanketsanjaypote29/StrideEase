@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { RxCross1 } from "react-icons/rx";
 import Modal from "./Modal";
 import CreateEventForm from "../pages/createEventForm";
+import { BASE_URL } from "../pages/helper";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const Navbar = () => {
   console.log("response", userData.user);
   const getUser = async () => {
     try {
-      const response = await axios.get("http://localhost:6005/login/sucess", {
+      const response = await axios.get(`${BASE_URL}/login/sucess`, {
         withCredentials: true,
       });
 
@@ -59,7 +60,7 @@ const Navbar = () => {
   }, []);
   const location = useLocation();
   const logout = () => {
-    window.location.href = "http://localhost:6005/logout";
+    window.location.href = `${BASE_URL}/logout`;
   };
   const handleCancelClick = () => {
     setShowModal(true);

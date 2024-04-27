@@ -16,14 +16,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
-
+import { BASE_URL } from "../../pages/helper";
 const DashboardNav = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
   console.log("response", userData.user);
   const getUser = async () => {
     try {
-      const response = await axios.get("http://localhost:6005/login/sucess", {
+      const response = await axios.get(`${BASE_URL}/login/success`, {
         withCredentials: true,
       });
 
@@ -38,6 +38,10 @@ const DashboardNav = () => {
   const menuItems = [
     { icon: <MdDashboard size={25} className="mr-4" />, text: "Dashboard" },
     { icon: <IoCreate size={25} className="mr-4" />, text: "Create New Event" },
+    {
+      icon: <BsCalendar2EventFill size={25} className="mr-4" />,
+      text: "Your Created Event",
+    },
     {
       icon: <BsCalendar2EventFill size={25} className="mr-4" />,
       text: "Your Registered Event",
@@ -58,7 +62,7 @@ const DashboardNav = () => {
   }, []);
   const location = useLocation();
   const logout = () => {
-    window.location.href = "http://localhost:6005/logout";
+    window.location.href = `${BASE_URL}/logout`;
   };
   const handleCancelClick = () => {
     setShowModal(true);
@@ -112,8 +116,10 @@ const DashboardNav = () => {
                           logout();
                         } else if (text === "Create New Event") {
                           navigate("/createevent");
+                        } else if (text === "Your Created Event") {
+                          navigate("/createdEvent");
                         } else if (text === "Your Registered Event") {
-                          navigate("/registeredEvent");
+                          navigate("/");
                         } else if (text === "Dashboard") {
                           navigate("/dashboard");
                         }

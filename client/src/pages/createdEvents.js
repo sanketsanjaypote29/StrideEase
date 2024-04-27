@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import Footer from "../components/footer";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navBars/RegisteredEventNav";
-import RegisteredEventCard from "../components/registeredEventCard";
+import RegisteredEventCard from "../components/createdEventCard";
 import { BASE_URL } from "./helper";
 
-const RegisteredEvents = () => {
+const CreatedEvents = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -83,4 +83,4 @@ const RegisteredEvents = () => {
   );
 };
 
-export default RegisteredEvents;
+export default CreatedEvents;

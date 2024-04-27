@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { RxCross1 } from "react-icons/rx";
 import { MdDashboard } from "react-icons/md";
 
+
 const CheckoutNav = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
@@ -36,6 +37,10 @@ const CheckoutNav = () => {
     { icon: <MdDashboard size={25} className="mr-4" />, text: "Dashboard" },
     
     { icon: <IoCreate size={25} className="mr-4" />, text: "Create New Event" },
+    {
+      icon: <BsCalendar2EventFill size={25} className="mr-4" />,
+      text: "Your Created Event",
+    },
     {
       icon: <BsCalendar2EventFill size={25} className="mr-4" />,
       text: "Your Registered Event",
@@ -75,13 +80,11 @@ const CheckoutNav = () => {
               <AiOutlineMenu size={30} />
             </div>
           </div>
-
           {nav ? (
             <div className="bg-black/80 fixed w-full h-screen z-10 top-0 left-0"></div>
           ) : (
             ""
           )}
-
           <div
             className={
               nav
@@ -110,8 +113,10 @@ const CheckoutNav = () => {
                           logout();
                         } else if (text === "Create New Event") {
                           navigate("/createevent");
+                        } else if (text === "Your Created Event") {
+                          navigate("/createdEvent");
                         } else if (text === "Your Registered Event") {
-                          navigate("/registeredEvent");
+                          navigate("/");
                         }else if(text==="Dashboard"){
                           navigate("/dashboard");
                         }
@@ -141,7 +146,6 @@ const CheckoutNav = () => {
               </div>
             </div>
           </div>
-
           <div className="flex items-center">
             {/* Profile */}
             <Link

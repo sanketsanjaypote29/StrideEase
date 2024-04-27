@@ -8,7 +8,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../pages/helper";
 
-const RegisteredEventCard = ({ event }) => {
+const CreatedEventCard = ({ event }) => {
   const navigate = useNavigate();
   const handleDelete = () => {
     // Implement the logic to delete the event here
@@ -86,4 +86,4 @@ const RegisteredEventCard = ({ event }) => {
   );
 };
 
-export default RegisteredEventCard;
+export default CreatedEventCard;

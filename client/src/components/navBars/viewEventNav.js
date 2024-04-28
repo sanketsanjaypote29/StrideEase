@@ -16,7 +16,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { RxCross1 } from "react-icons/rx";
 import { MdDashboard } from "react-icons/md";
-import {BASE_URL} from "../../pages/helper"
+import { BASE_URL } from "../../pages/helper";
 
 const ViewEventNav = () => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const ViewEventNav = () => {
   console.log("response", userData.user);
   const getUser = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/login/success`, {
+      const response = await axios.get(`${BASE_URL}/login/sucess`, {
         withCredentials: true,
       });
 
@@ -134,10 +134,14 @@ const ViewEventNav = () => {
           </div>
           <div className="flex items-center">
             {/* Logo */}
-            <img src="/logo.png" alt="Logo" className="h-8 mr-2" />
-            <span className="text-lg font-bold text-black mr-4">
-              Stride Ease
-            </span>
+            <div className="flex mr-96 items-center">
+              <Link to="/dashboard" className="flex items-center">
+                <img src="/logo.png" alt="Logo" className="h-8 mr-2" />
+                <span className="text-lg font-bold text-black mr-4">
+                  Stride Ease
+                </span>
+              </Link>
+            </div>
 
             <div className="relative">
               <input

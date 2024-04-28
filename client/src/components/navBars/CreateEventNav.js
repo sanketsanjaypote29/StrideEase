@@ -17,14 +17,14 @@ import { useNavigate } from "react-router-dom";
 import { RxCross1 } from "react-icons/rx";
 import { MdDashboard } from "react-icons/md";
 import Modal from "../Modal";
-import {BASE_URL} from "../../pages/helper"
+import { BASE_URL } from "../../pages/helper";
 const CreateEventNav = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
   console.log("response", userData.user);
   const getUser = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/login/success`, {
+      const response = await axios.get(`${BASE_URL}/login/sucess`, {
         withCredentials: true,
       });
 
@@ -83,11 +83,13 @@ const CreateEventNav = () => {
             <AiOutlineMenu size={30} />
           </button>
 
-          <div className="flex items-center ml-0 mr-96">
-            <img src="/logo.png" alt="Logo" className="h-8 mr-2" />
-            <span className="text-lg font-bold text-black mr-4">
-              Stride Ease
-            </span>
+          <div className="mr-96 flex items-center">
+            <Link to="/dashboard" className="flex items-center">
+              <img src="/logo.png" alt="Logo" className="h-8 mr-2" />
+              <span className="text-lg font-bold text-black mr-4">
+                Stride Ease
+              </span>
+            </Link>
           </div>
 
           {/* Cross button */}

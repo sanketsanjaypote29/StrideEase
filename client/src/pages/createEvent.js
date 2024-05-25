@@ -242,7 +242,7 @@ const CreateEvent = () => {
                       {index + 1}
                     </span>
                     {isFinalStep(index) ? null : (
-                      <div className="mt-2  text-gray-800">{step}</div>
+                      <div className="mt-2 text-gray-800">{step}</div>
                     )}
                   </>
                 )}
@@ -263,7 +263,7 @@ const CreateEvent = () => {
         </div>
 
         {/* Form */}
-        <div className="w-1/2 h-auto p-4 border bg-amber-50 left-96 mb-28 rounded-2xl">
+        <div className="h-auto p-4 mx-4 border w-2/2 bg-amber-50 left-96 mb-28 rounded-2xl lg:w-1/2">
           <form onSubmit={(e) => e.preventDefault()}>
             {activeStep === 0 && (
               <div>
@@ -361,7 +361,7 @@ const CreateEvent = () => {
                     {/* Add state options here */}
                   </select>
                 </div>
-                <div className="flex justify-start mt-8 mb-4 ml-10">
+                <div className="flex justify-start mt-8 mb-4 ">
                   <label className="block mb-2 mr-10 text-sm font-bold text-gray-700">
                     I am an Individual
                     <input
@@ -442,7 +442,7 @@ const CreateEvent = () => {
               </div>
             )}
             {activeStep === 2 && (
-              <div>
+              <div className="">
                 {/* Description */}
                 <div className="mb-20 h-80">
                   <div className="flex items-center mb-2">

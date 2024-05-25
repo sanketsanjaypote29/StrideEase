@@ -23,18 +23,17 @@ const Register = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4">
-      {/* Left container with SVG */}
-      <div className="flex justify-start mt-10 ml-40 mr-20 w-xl h-xl">
+    <div className="flex items-center justify-center min-h-screen min-x-full">
+      <div className="justify-start hidden md:flex w-xl h-xl">
         <img
           src="./sign-up/sign-up-not-css.svg"
           alt="register"
-          className="w-full h-full "
+          className="w-full h-[32rem]"
         />
       </div>
 
-      <div className="flex justify-center h-full p-4 mt-10 ml-20 rounded-lg shadow-lg w-96 bg-white-50 shadow-blue-950">
-        <form className="w-72" onSubmit={registerUser}>
+      <div className="flex justify-center p-6 mx-12 rounded-lg shadow-lg h-fit lg:h-[30rem] w-80 bg-white-50 shadow-blue-950">
+        <form className="w-70" onSubmit={registerUser}>
           <div className="mt-10 mb-5">
             <div className="relative w-full min-w-[200px] h-10">
               <input

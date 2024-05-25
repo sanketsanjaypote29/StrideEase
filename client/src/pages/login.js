@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { IoCreate } from "react-icons/io5";
 import axios from 'axios'
@@ -11,7 +11,7 @@ const Login = () => {
 
   const [email, setEmail] = useState("")
   const [password,setPassword] = useState("")
-
+  const navigate = useNavigate();
   const loginUser = async (e) => {
     e.preventDefault();
     try {
@@ -20,6 +20,7 @@ const Login = () => {
           'Content-Type': 'application/json',
         }},);
         console.log(response.data);
+        navigate("/dashboard");
         localStorage.setItem("googleId", response.data.user.googleId);
     } catch (error) {
       console.error(error);
@@ -28,18 +29,17 @@ const Login = () => {
  
  
   return (
-    <div className="grid grid-cols-2 gap-4">
-      {/* Left container with SVG */}
-      <div className="flex justify-start mt-10 ml-40 mr-20 w-xl h-xl">
+    <div className="flex items-center justify-center min-h-screen min-x-full">
+      <div className="justify-start hidden md:flex w-xl h-xl">
         <img
           src="./tablet-login/tablet-login-not-css.svg"
           alt="login"
-          className="w-full h-full "
+          className="w-full h-[32rem]"
         />
       </div>
 
-      <div className="flex justify-center h-full p-4 mt-10 ml-20 rounded-lg shadow-lg w-96 bg-white-50 shadow-blue-950">
-        <form className="w-72" onSubmit={loginUser}>
+      <div className="flex justify-center p-6 mx-12 rounded-lg shadow-lg h-fit lg:h-[25rem] w-80 bg-white-50 shadow-blue-950">
+        <form className="w-68" onSubmit={loginUser}>
           <div className="mt-10 mb-5">
             <div className="relative w-full min-w-[200px] h-10">
               <input
@@ -69,7 +69,7 @@ const Login = () => {
           </div>
 
           <div className="flex justify-center">
-            <button type="submit" className="flex items-center px-4 py-2 text-black bg-transparent border rounded-full hover:border-blue-800 mt-11">
+            <button type="submit" className="flex items-center px-2 py-3 text-black bg-transparent border rounded-full hover:border-blue-800 mt-11">
               <div className="mr-2">
                 {/* Wrapper div for spacing */}
                 <IoCreate /> {/* Add the Google icon */}
@@ -77,13 +77,13 @@ const Login = () => {
               Login
             </button>
             <button
-              className="flex items-center px-4 py-2 ml-8 text-black bg-transparent border rounded-full hover:border-blue-800 mt-11"
+              className="flex items-center px-2 py-3 ml-8 text-black bg-transparent border rounded-full hover:border-blue-800 mt-11"
               onClick={loginWithGoogle}>
               <div className="mr-2">
                 {" "}
                 <FcGoogle />
               </div>
-              Google Login
+              Google
             </button>
           </div>
 

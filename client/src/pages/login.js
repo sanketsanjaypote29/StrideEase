@@ -1,13 +1,21 @@
+
 import React, {useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import { FcGoogle } from "react-icons/fc";
 import { IoCreate } from "react-icons/io5";
-import axios from 'axios'
+import axios from "axios";
+import { BASE_URL } from "./helper";
+
 
 const Login = () => {
   const loginWithGoogle = () => {
-    window.open("http://localhost:6005/auth/google/callback",'_blank');
+    window.open(`${BASE_URL}/auth/google/callback`, "_blank");
   };
+
 
   const [email, setEmail] = useState("")
   const [password,setPassword] = useState("")
@@ -22,12 +30,30 @@ const Login = () => {
         console.log(response.data);
         navigate("/dashboard");
         localStorage.setItem("googleId", response.data.user.googleId);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const loginUser = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/api/login`,
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response.data);
+      localStorage.setItem("googleId", response.data.user.googleId);
+
     } catch (error) {
       console.error(error);
     }
- };
- 
- 
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen min-x-full">
       <div className="justify-start hidden md:flex w-xl h-xl">
@@ -69,7 +95,13 @@ const Login = () => {
           </div>
 
           <div className="flex justify-center">
+
             <button type="submit" className="flex items-center px-2 py-3 text-black bg-transparent border rounded-full hover:border-blue-800 mt-11">
+
+            <button
+              type="submit"
+              className="flex items-center px-4 py-2 text-black bg-transparent border rounded-full hover:border-blue-800 mt-11">
+
               <div className="mr-2">
                 {/* Wrapper div for spacing */}
                 <IoCreate /> {/* Add the Google icon */}

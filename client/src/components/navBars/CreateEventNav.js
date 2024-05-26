@@ -17,13 +17,14 @@ import { useNavigate } from "react-router-dom";
 import { RxCross1 } from "react-icons/rx";
 import { MdDashboard } from "react-icons/md";
 import Modal from "../Modal";
+import { BASE_URL } from "../../pages/helper";
 const CreateEventNav = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
   console.log("response", userData.user);
   const getUser = async () => {
     try {
-      const response = await axios.get("http://localhost:6005/login/sucess", {
+      const response = await axios.get(`${BASE_URL}/login/sucess`, {
         withCredentials: true,
       });
 
@@ -39,6 +40,10 @@ const CreateEventNav = () => {
     { icon: <MdDashboard size={25} className="mr-4" />, text: "Dashboard" },
     { icon: <IoCreate size={25} className="mr-4" />, text: "Create New Event" },
 
+    {
+      icon: <BsCalendar2EventFill size={25} className="mr-4" />,
+      text: "Your Created Event",
+    },
     {
       icon: <BsCalendar2EventFill size={25} className="mr-4" />,
       text: "Your Registered Event",
@@ -59,7 +64,7 @@ const CreateEventNav = () => {
   }, []);
   const location = useLocation();
   const logout = () => {
-    window.location.href = "http://localhost:6005/logout";
+    window.location.href = `${BASE_URL}/logout`;
   };
   const handleCancelClick = () => {
     setShowModal(true);
@@ -78,11 +83,21 @@ const CreateEventNav = () => {
             <AiOutlineMenu size={30} />
           </button>
 
+
           <div className="flex items-center ml-8 ">
             <img src="/logo.png" alt="Logo" className="h-8 mr-2" />
             <span className="mr-4 text-lg font-bold text-black">
               Stride Ease
             </span>
+
+          <div className="mr-96 flex items-center">
+            <Link to="/dashboard" className="flex items-center">
+              <img src="/logo.png" alt="Logo" className="h-8 mr-2" />
+              <span className="text-lg font-bold text-black mr-4">
+                Stride Ease
+              </span>
+            </Link>
+
           </div>
 
           {/* Cross button */}
@@ -127,8 +142,10 @@ const CreateEventNav = () => {
                           logout();
                         } else if (text === "Create New Event") {
                           navigate("/createevent");
+                        } else if (text === "Your Created Event") {
+                          navigate("/createdEvent");
                         } else if (text === "Your Registered Event") {
-                          navigate("/registeredEvent");
+                          navigate("/");
                         } else if (text === "Dashboard") {
                           navigate("/dashboard");
                         }

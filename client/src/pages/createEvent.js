@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./stepper.css";
 import { useNavigate } from "react-router-dom";
 import CreateEventNav from "../components/navBars/CreateEventNav";
+import { BASE_URL } from "./helper";
 
 const defaultPosition = {
   lat: 18.5204,
@@ -50,7 +51,7 @@ const CreateEvent = () => {
   //want to get the googleId of the user in local storage
   const getUser = async () => {
     try {
-      const response = await axios.get("http://localhost:6005/login/sucess", {
+      const response = await axios.get(`${BASE_URL}/login/sucess`, {
         withCredentials: true,
       });
       console.log(response);
@@ -89,7 +90,7 @@ const CreateEvent = () => {
   const handleData = async () => {
     const googleId = localStorage.getItem("googleId");
     try {
-      const response = await fetch("http://localhost:6005/", {
+      const response = await fetch(`${BASE_URL}`, {
         method: "post",
         body: JSON.stringify({
           googleId,

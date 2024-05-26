@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IoCreate } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import { BASE_URL } from "./helper";
 const Register = () => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -11,7 +11,7 @@ const Register = () => {
   const registerUser = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:6005/api/register", {
+      const response = await axios.post(`${BASE_URL}/api/register`, {
         username,
         email,
         password,

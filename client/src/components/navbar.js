@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import CreateEventForm from "../pages/createEventForm";
+import { BASE_URL } from "../pages/helper";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Navbar = () => {
 
   const getUser = async () => {
     try {
-      const response = await axios.get("http://localhost:6005/login/sucess", {
+      const response = await axios.get(`${BASE_URL}/login/sucess`, {
         withCredentials: true,
       });
       setUserData(response.data);
@@ -29,7 +30,7 @@ const Navbar = () => {
   }, []);
 
   const logout = () => {
-    window.location.href = "http://localhost:6005/logout";
+    window.location.href = `${BASE_URL}/logout`;
   };
 
   const handleCancelClick = () => {

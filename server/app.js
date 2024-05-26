@@ -13,12 +13,14 @@ const createEvents = require("./models/newEventSchema");
 const eventsRouter = require("./routes/eventRouter");
 
 require("./db/conn");
-require('dotenv').config();
+require("dotenv").config();
 
 app.use(express.json());
-app.use(express.urlencoded({
-  extended: true
-}));
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
 app.use("/create", createEvents);
 
@@ -122,6 +124,9 @@ app.get("/logout", (req, res, next) => {
   res.redirect("http://localhost:3000/");
 });
 
+
+
+
 //payment methods
 
 Cashfree.XClientId = process.env.CLIENT_ID;
@@ -190,3 +195,5 @@ app.post("/verify", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`server started at port no ${PORT}`);
 });
+
+

@@ -4,15 +4,6 @@ import EventCard from "./eventCard";
 const EventContainer = ({ events }) => {
   return (
 <div className="items-center justify-center min-h-screen mt-8">
-      <div className="flex items-center justify-center">
-        <label className="relative flex text-3xl font-bold text-black ">
-          Events At
-        </label>
-        <label className="flex ml-2 text-3xl font-bold text-gray-500 ">
-          Pune
-        </label>
-      </div>
-
       <div className="flex flex-col px-3 py-3 mt-8 mb-2">
         <EventCard />
       </div>

@@ -89,7 +89,8 @@ const CheckoutNav = () => {
               nav
                 ? "fixed top-0 left-0 w-[300px] h-screen bg-white z-10 duration-300"
                 : "fixed top-0 left-[-100%] w-[300px] h-screen bg-white z-10 duration-300"
-            }>
+            }
+          >
             <AiOutlineClose
               onClick={() => setNav(!nav)}
               size={30}
@@ -121,7 +122,8 @@ const CheckoutNav = () => {
                         } else if (text === "Dashboard") {
                           navigate("/dashboard");
                         }
-                      }}>
+                      }}
+                    >
                       {icon} {text}
                     </li>
                   </div>
@@ -129,9 +131,9 @@ const CheckoutNav = () => {
               </ul>
             </nav>
           </div>
-          <div className="flex items-center">
+          <div className="flex ">
             {/* Logo */}
-            <div className="flex ml-5 mt-5 items-center">
+            <div className="flex mt-5 mb-6 justify-start">
               <Link to="/dashboard" className="flex items-center">
                 <img src="/logo.png" alt="Logo" className="h-8 mr-2" />
                 <span className="text-lg font-bold text-black mr-4">
@@ -140,7 +142,7 @@ const CheckoutNav = () => {
               </Link>
             </div>
 
-            <div className="relative">
+            {/* <div className="relative">
               <input
                 type="text"
                 placeholder="Search for Event...."
@@ -149,13 +151,14 @@ const CheckoutNav = () => {
               <div className="absolute inset-y-0 right-0 mr-5 pl-3 flex items-center pointer-events-none">
                 <FaSearch className="text-gray-400" />
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="flex items-center">
             {/* Profile */}
             <Link
               to="/profile"
-              className="hover:text-blue-400 px-3 py-2 text-black">
+              className="hover:text-blue-400 px-3 py-2 text-black"
+            >
               Profile
             </Link>
 

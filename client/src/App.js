@@ -15,6 +15,7 @@ import CheckOutPage from "./pages/checkOutPage";
 import "react-toastify/dist/ReactToastify.css";
 import EditEvent from "./pages/editEvent";
 import { useEffect } from "react";
+import LiveEvent from "./pages/LiveEvent";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/createdEvent" element={<CreatedEvent />} />
         <Route path="/checkOut/:eventId" element={<CheckOutPage />} />
         <Route path="/editevent/:eventId" element={<EditEvent />} />
+        <Route path="/liveEvents" element={<LiveEvent />} />
       </Routes>
     </>
   );

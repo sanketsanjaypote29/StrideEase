@@ -27,7 +27,6 @@ const Dashboard = () => {
   return (
     <div className="h-full overflow-x-hidden">
       <Navbar />
-      <EventFilter />
       <EventContainer />
       <Chatbot />
       <Footer />

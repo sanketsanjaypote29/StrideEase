@@ -143,7 +143,7 @@ const ViewEventNav = () => {
               </Link>
             </div>
 
-            <div className="relative">
+            {/* <div className="relative">
               <input
                 type="text"
                 placeholder="Search for Event...."
@@ -152,7 +152,7 @@ const ViewEventNav = () => {
               <div className="absolute inset-y-0 right-0 mr-5 pl-3 flex items-center pointer-events-none">
                 <FaSearch className="text-gray-400" />
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex items-center">

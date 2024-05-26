@@ -75,13 +75,20 @@ const CreateEventNav = () => {
   };
 
   return (
-    <div>
-      <nav className="bg-white p-4">
-        <div className="mx-10 max-w-7xl  px-2 sm:px-6 lg:px-8 flex items-center justify-between">
+    <div className="max-w-full">
+      <nav className="p-4 bg-white">
+        <div className="flex items-center justify-between px-2 max-w-7xl sm:px-6 lg:px-8">
           {/* Logo */}
           <button onClick={() => setNav(!nav)}>
             <AiOutlineMenu size={30} />
           </button>
+
+
+          <div className="flex items-center ml-8 ">
+            <img src="/logo.png" alt="Logo" className="h-8 mr-2" />
+            <span className="mr-4 text-lg font-bold text-black">
+              Stride Ease
+            </span>
 
           <div className="mr-96 flex items-center">
             <Link to="/dashboard" className="flex items-center">
@@ -90,10 +97,11 @@ const CreateEventNav = () => {
                 Stride Ease
               </span>
             </Link>
+
           </div>
 
           {/* Cross button */}
-          <div className="ml-96 right-0">
+          <div className="right-0 ">
             <button onClick={handleCancelClick}>
               <RxCross1 size={30} />
             </button>
@@ -101,7 +109,7 @@ const CreateEventNav = () => {
           </div>
 
           {nav ? (
-            <div className="bg-black/80 fixed w-full h-screen z-10 top-0 left-0"></div>
+            <div className="fixed top-0 left-0 z-10 w-full h-screen bg-black/80"></div>
           ) : (
             ""
           )}
@@ -115,11 +123,11 @@ const CreateEventNav = () => {
             <AiOutlineClose
               onClick={() => setNav(!nav)}
               size={30}
-              className="absolute right-4 top-4 cursor-pointer"
+              className="absolute cursor-pointer right-4 top-4"
             />
-            <div className="flex ml-5 mt-5">
+            <div className="flex mt-5 ml-5">
               <img src="/logo.png" alt="Logo" className="h-8 mr-2" />
-              <span className="text-lg font-bold text-black mr-4">
+              <span className="mr-4 text-lg font-bold text-black">
                 Stride Ease
               </span>
             </div>

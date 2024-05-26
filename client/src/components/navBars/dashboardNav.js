@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
-import { SlLocationPin } from "react-icons/sl";
-import { TbTruckDelivery } from "react-icons/tb";
-import { FaWallet } from "react-icons/fa";
-import { MdFavorite, MdHelp } from "react-icons/md";
 import { AiOutlineMenu, AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import { IoCreate } from "react-icons/io5";
 import { BsCalendar2EventFill } from "react-icons/bs";
@@ -74,16 +70,16 @@ const DashboardNav = () => {
 
   return (
     <div>
-      <nav className="bg-white p-4">
-        <div className="mx-10 max-w-7xl px-2 sm:px-6 lg:px-8 flex items-center justify-between">
+      <nav className="p-4 bg-white">
+        <div className="flex items-center justify-between px-2 max-w-7xl sm:px-6 lg:px-8">
           <div className="flex items-center">
-            <div onClick={() => setNav(!nav)} className="cursor-pointer">
+            <div onClick={() => setNav(!nav)} className="cursor-pointer ">
               <AiOutlineMenu size={30} />
             </div>
           </div>
 
           {nav ? (
-            <div className="bg-black/80 fixed w-full h-screen z-10 top-0 left-0"></div>
+            <div className="fixed top-0 left-0 z-10 w-full h-screen bg-black/80"></div>
           ) : (
             ""
           )}
@@ -93,15 +89,16 @@ const DashboardNav = () => {
               nav
                 ? "fixed top-0 left-0 w-[300px] h-screen bg-white z-10 duration-300"
                 : "fixed top-0 left-[-100%] w-[300px] h-screen bg-white z-10 duration-300"
-            }>
+            }
+          >
             <AiOutlineClose
               onClick={() => setNav(!nav)}
               size={30}
-              className="absolute right-4 top-4 cursor-pointer"
+              className="absolute cursor-pointer right-4 top-4"
             />
-            <div className="flex ml-5 mt-5">
+            <div className="flex mt-5 ml-5">
               <img src="/logo.png" alt="Logo" className="h-8 mr-2" />
-              <span className="text-lg font-bold text-black mr-4">
+              <span className="mr-4 text-lg font-bold text-black">
                 Stride Ease
               </span>
             </div>
@@ -123,7 +120,8 @@ const DashboardNav = () => {
                         } else if (text === "Dashboard") {
                           navigate("/dashboard");
                         }
-                      }}>
+                      }}
+                    >
                       {icon} {text}
                     </li>
                   </div>
@@ -133,6 +131,14 @@ const DashboardNav = () => {
           </div>
           <div className=" flex items-center">
             {/* Logo */}
+
+            <img src="/logo.png" alt="Logo" className="hidden h-8 mr-2 lg:block" />
+            <span className="hidden mr-4 text-lg font-bold text-black lg:block">
+              Stride Ease
+            </span>
+          </div>
+
+
             <div className="flex mr-1 items-center">
               <Link to="/dashboard" className="flex items-center">
                 <img src="/logo.png" alt="Logo" className="h-8 mr-2" />
@@ -141,30 +147,31 @@ const DashboardNav = () => {
                 </span>
               </Link>
             </div>
+
             <div className="relative">
               <input
-                type="text"
+                type="search"
                 placeholder="Search for Event...."
-                className="px-3 py-2 ml-40 min-w-96 border text-black rounded-full hover:border-blue-800 pl-12 shadow-lg shadow-blue-100"
+                className="px-3 py-2 pl-12 ml-2 text-black border rounded-full shadow-lg min-w-48 hover:border-blue-800 shadow-blue-100 lg:w-96"
               />
-              <div className="absolute inset-y-0 right-0 mr-5 pl-3 flex items-center pointer-events-none">
+              <div className="absolute inset-y-0 right-0 flex items-center pl-3 mr-5 pointer-events-none">
                 <FaSearch className="text-gray-400" />
               </div>
             </div>
-          </div>
 
           <div className="flex items-center">
             {/* Profile */}
             <Link
               to="/profile"
-              className="hover:text-blue-400 px-3 py-2 text-black">
+              className="px-3 py-2 text-black hover:text-blue-400"
+            >
               Profile
             </Link>
 
             <img
               src={userData.user?.image}
               alt="user"
-              className="w-10 h-10 rounded-full p-1"
+              className="w-10 h-10 p-1 rounded-full"
             />
             <span className="px-3 py-2 text-black">
               {userData.user?.displayName}

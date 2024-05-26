@@ -36,6 +36,14 @@ const items = [
 
 const Footer = () => {
   return (
+    <footer className="bottom-0 left-0 right-0 max-w-full bg-transperant">
+      <div className="container flex max-w-full mb-0 h-52 bg-gradient-to-b from-slate-50 to-pink-200">
+        <div className="flex ml-10">
+          <img src="footer.png" alt="footer1" className="h-52" />
+          <img src="footer.png" alt="footer2" className="h-52" />
+          <img src="footer.png" alt="footer3" className="h-52" />
+          <img src="footer.png" alt="footer4" className="h-52" />
+
     <div className="w-full mt-24 bg-slate-900 text-gray-300 py-y px-2">
       <div className="max-w-[1240px] mx-auto grid grid-cols-2 md:grid-cols-6 border-b-2 border-gray-600 py-8">
         {sections.map((section, index) => (
@@ -64,6 +72,7 @@ const Footer = () => {
             />
             <button className="p-2 mb-4">Subscribe</button>
           </form>
+
         </div>
       </div>
 

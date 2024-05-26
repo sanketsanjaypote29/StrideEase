@@ -1,137 +1,212 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Navbar from "../components/navbar";
-import { MdOutlineEventNote, MdOutlineContactMail, MdLockOutline } from "react-icons/md";
+import { MdOutlineEventNote } from "react-icons/md";
 import { TbFileDescription } from "react-icons/tb";
-import { IoBagCheckOutline, IoShareOutline } from "react-icons/io5";
+import { IoBagCheckOutline } from "react-icons/io5";
 import { GrMapLocation } from "react-icons/gr";
-import { FcLike } from "react-icons/fc";
-import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/footer";
+import { IoShareOutline } from "react-icons/io5";
+import { FcLike } from "react-icons/fc";
+import { MdLockOutline } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { MdOutlineContactMail } from "react-icons/md";
+import { useParams } from "react-router-dom";
+import { useState } from "react";
+import MapPicker from "react-google-map-picker";
+import Geocode from "react-geocode";
+import { useEffect } from "react";
 import ViewEventNav from "../components/navBars/viewEventNav";
 
 const ViewEventDetails = () => {
   const navigate = useNavigate();
-  const { eventId } = useParams();
+  const { eventId } = useParams(); // Extract event ID from route parameters
   const [event, setEvent] = useState(null);
   const [showMapPopup, setShowMapPopup] = useState(false);
 
   useEffect(() => {
     fetchEventDetails();
   }, [eventId]);
-
+  // console.log(eventId);
   const fetchEventDetails = async () => {
     try {
       const response = await fetch(
         `http://localhost:6005/api/events/${eventId}`
       );
       const data = await response.json();
+      console.log(data);
       setEvent(data.event);
     } catch (error) {
       console.error("Error fetching event details:", error);
     }
   };
-
   if (!event) {
     return <div>Loading...</div>;
   }
-
+  const date = new Date(event.saleStartDate);
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = { day: "2-digit", month: "long", year: "numeric" };
-    return date.toLocaleDateString("en-GB", options);
+    const formattedDate = date.toLocaleDateString("en-GB", options);
+
+    // Split the formatted date by space
+    const dateParts = formattedDate.split(" ");
+
+    // Concatenate day, month, and year
+    const formattedString = `${dateParts[0]} ${dateParts[1]} ${dateParts[2]}`;
+
+    return formattedString;
   };
 
+  const formatVenueAddress = (address) => {
+    // Split the address string by comma
+    const addressParts = address.split(",");
+    // Iterate over the array elements from index 1 to 5 and concatenate them
+    let formattedAddress = "";
+    for (let i = 1; i <= 3 && i < addressParts.length; i++) {
+      formattedAddress += addressParts[i].trim() + " ";
+    }
+    // Remove trailing whitespace
+    formattedAddress = formattedAddress.trim();
+    return formattedAddress;
+  };
+
+  const openMapWithCoordinates = () => {
+    setShowMapPopup(true);
+  };
   const openMapInPopup = (address) => {
-    const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent(address)}`;
-    window.open(mapUrl, "_blank", "width=600,height=600");
-  };
+    try {
+      if (!address) {
+        throw new Error("Address is not provided.");
+      }
+      const addressParts = address.split(",");
+      // Iterate over the array elements from index 1 to 5 and concatenate them
+      let formattedAddress = "";
+      for (let i = 1; i < addressParts.length; i++) {
+        formattedAddress += addressParts[i].trim() + " ";
+      }
+      // Remove trailing whitespace
+      formattedAddress = formattedAddress.trim();
 
+      const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent(
+        formattedAddress
+      )}`;
+
+      const popupWidth = 600;
+      const popupHeight = 600;
+      const left = window.innerWidth / 2 - popupWidth / 2;
+      const top = window.innerHeight / 2 - popupHeight / 2;
+      const popupOptions = `width=${popupWidth},height=${popupHeight},top=${top},left=${left}`;
+      window.open(mapUrl, "_blank", popupOptions);
+    } catch (error) {
+      console.error("Error opening map:", error.message);
+      // Handle error
+    }
+  };
+  const handleCloseMapPopup = () => {
+    setShowMapPopup(false);
+  };
   const handleClick = () => {
+    // alert("You have successfully registered for the event");
     navigate(`/checkOut/${event._id}`);
   };
-
+  // console.log("this is eventid in view:", event._id);
   return (
-    <div className="flex flex-col min-h-screen">
-      <ViewEventNav />
-      <div className="flex flex-col justify-center p-4 mt-8 space-y-8 lg:flex-row lg:p-10 lg:space-y-0 lg:space-x-8">
-        <div className="flex flex-col items-start space-y-4 lg:space-y-8 lg:w-1/4">
-          <button className="flex items-center w-full px-4 py-2 font-bold text-black bg-transparent rounded hover:border lg:w-auto">
-            <MdOutlineEventNote className="mr-2" size={25} />
-            <span>Event</span>
-            <span className="ml-1 text-gray-500">Detail</span>
-          </button>
-          <button className="flex items-center w-full px-4 py-2 font-bold text-black bg-transparent rounded hover:border lg:w-auto">
-            <TbFileDescription className="mr-2" size={25} />
-            <span>Event</span>
-            <span className="ml-1 text-gray-500">Description</span>
-          </button>
-          <button className="flex items-center w-full px-4 py-2 font-bold text-black bg-transparent rounded hover:border lg:w-auto">
-            <IoBagCheckOutline className="mr-2" size={25} />
-            <span>Checkout</span>
-          </button>
-        </div>
-
-        <div className="flex flex-col lg:flex-row lg:space-x-8 lg:w-3/4">
-          <div className="flex flex-col w-full space-y-8 lg:w-3/5">
-            <img
-              src="/eventbanner.jpg"
-              alt="Event"
-              className="object-cover w-full rounded-lg h-72"
-            />
-            <div className="flex flex-col space-y-4">
-              <p className="text-xl text-center text-black">
-                {event.ticketName}
-              </p>
-              <div className="flex items-center space-x-2">
-                <span className="text-gray-600 text-md">{formatDate(event.saleStartDate)} |</span>
-                <span className="text-gray-600 text-md">{event.venueAddress}</span>
-                <button
-                  className="flex items-center px-2 py-2 border rounded-xl"
-                  onClick={() => openMapInPopup(event.venueAddress)}
-                >
-                  View On map <GrMapLocation className="ml-2" size={20} />
-                </button>
-              </div>
-              <div className="flex space-x-4">
-                <button>
-                  <IoShareOutline size={30} />
-                </button>
-                <button>
-                  <FcLike size={30} />
-                </button>
-              </div>
-              <div className="p-4 border rounded-lg bg-amber-50">
-                <div className="mb-4">
-                  <span className="text-lg font-bold text-black">Event</span>
-                  <span className="ml-1 font-semibold text-gray-500">Detail</span>
-                </div>
-                <div className="p-4 bg-white border rounded-lg">
-                  <p>{event.description}</p>
-                </div>
-              </div>
+    <div className="h-full">
+      <ViewEventNav/>
+      <div className="flex justify-center mt-8">
+        <div className="flex flex-row justify-between ml-10">
+          <div className="mb-8 mr-10 ">
+            <div className="flex items-center">
+              <button className="bg-transparent hover:border text-black w-40 mb-7 font-bold py-2 px-4 rounded  flex items-center">
+                <MdOutlineEventNote className="mr-1" size={"25px"} />
+                <label className="text-black font-bold text-lg">Event</label>
+                <label className="text-gray-500 ml-1">Detail</label>
+              </button>
+            </div>
+            <div className="flex items-center">
+              <button className="bg-transparent hover:border text-black w-50  font-bold py-2 px-4 rounded mb-7 flex items-center">
+                <TbFileDescription className="mr-1" size={"25px"} />
+                <label className="text-black font-bold text-lg">Event</label>
+                <label className="text-gray-500 ml-1">Description</label>
+              </button>
+            </div>
+            <div className="flex items-center">
+              <button className="bg-transparent hover:border text-black w-40  font-bold py-2 px-4 rounded mb-7 flex items-center">
+                <IoBagCheckOutline className="mr-1" size={"25px"} />
+                <label className="text-black font-bold text-lg">Checkout</label>
+              </button>
             </div>
           </div>
+        </div>
 
-          <div className="flex flex-col space-y-4 lg:space-y-8 lg:w-2/5">
-            <div className="p-4 border rounded-lg bg-amber-50">
-              <h2 className="font-semibold text-black">
-                ₹ {event.ticketPrice} Onwards Exclusive of Taxes and Platform Fees
-              </h2>
+        <div className="mr-8 w-[1000px] h-full  py-5">
+          <img
+            src="/eventbanner.jpg"
+            alt="Event"
+            className="w-[1100px] h-72 object-cover rounded-lg"
+          />
+          <div className="flex">
+            <p className="mt-4 text-center text-black text-xl ">
+              {event.ticketName}
+            </p>
+          </div>
+          <div className="flex items-center ml-2">
+            <div className="mflex items-center">
+              <label className="text-gray-600 w-44 text-md mr-4">
+                {formatDate(event.saleStartDate)} | 
+              </label>
+              <label className="text-gray-600 text-md">
+                {event.venueAddress}
+              </label>
+            </div>
+            <div>
               <button
-                className="flex items-center justify-center w-full px-4 py-2 mt-4 font-bold text-black border rounded-lg bg-amber-500"
-                onClick={handleClick}
-              >
-                <MdLockOutline className="mr-2" size={25} /> Book Now
+                className="border px-2 py-3 rounded-xl w-52 right-0 flex items-center justify-center"
+                onClick={() => openMapInPopup(event.venueAddress)}>
+                View On map <GrMapLocation className="ml-3" size={"20px"} />
               </button>
             </div>
-            <div className="p-4 border rounded-lg bg-amber-50">
-              <h2 className="font-semibold text-black">
-                Have any Doubts? Send any Queries To the Organizer
-              </h2>
-              <button className="flex items-center justify-center w-full px-4 py-2 mt-4 font-bold text-black border rounded-lg bg-amber-500">
-                <MdOutlineContactMail className="mr-2" size={25} /> Contact Organizer
+
+            <div className=" flex">
+              <button>
+                <IoShareOutline size={"30px"} className="ml-10 mr-5" />
+              </button>
+              <button>
+                <FcLike size={"30px"} />
               </button>
             </div>
+          </div>
+          <div className=" min-h-96 border mt-10 rounded-lg bg-amber-50 h-full ">
+            <div className="m-5">
+              <label className="text-black font-bold text-lg">Event</label>
+              <label className="text-gray-500 ml-1 font-semibold">Detail</label>
+            </div>
+            <div className="m-10 bg-white border rounded-lg h-full min-h-64">
+              <p className="m-5">{event.description}</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div className="border bg-amber-50 p-4 w-80 rounded-lg">
+            <h2 className="text-black font-semibold">
+              ₹ {event.ticketPrice} Onwards Exclusive of Taxes and Platform Fees
+            </h2>
+
+            <button
+              className="border  px-2 py-3 rounded-lg mt-10 bg-amer-500   text-black border-black font-bold flex items-center "
+              onClick={handleClick}>
+              <MdLockOutline className="ml-2 mr-3" size={"25px"} /> Book Now
+            </button>
+          </div>
+          <div className="border bg-amber-50  p-4 w-80 mr-10 mt-10 rounded-lg">
+            <h2 className="text-black font-semibold">
+              Have any Doubts? Send any Queries To the Organizer
+            </h2>
+            <button className="border px-2 py-3 rounded-lg mt-10 bg-amer-500 border-black text-black font-bold flex items-center">
+              <MdOutlineContactMail className="ml-2 mr-3" size={"25px"} />{" "}
+              Contact Organizer
+            </button>
           </div>
         </div>
       </div>

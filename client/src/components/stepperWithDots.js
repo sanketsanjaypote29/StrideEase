@@ -10,7 +10,7 @@ export function StepperWithDots() {
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
  
   return (
-    <div className="w-full px-8 py-4">
+    <div className="w-full px-8 py-4 ">
       <Stepper
         activeStep={activeStep}
         isLastStep={(value) => setIsLastStep(value)}
@@ -31,5 +31,3 @@ export function StepperWithDots() {
     </div>
   );
 }
-
-

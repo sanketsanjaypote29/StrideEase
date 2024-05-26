@@ -3,6 +3,7 @@ import { TERipple } from "tw-elements-react";
 import { FaRegShareSquare } from "react-icons/fa";
 import { FcLike } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../pages/helper";
 
 const EventCard = ({ event }) => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const EventCard = ({ event }) => {
   return (
     <div className="w-62 h-auto bg-amber-50 rounded-3xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] shadow-blue-100  hover:shadow-pink-200 dark:bg-white-700">
       <TERipple>
-        <div className="relative h-56 bg-no-repeat bg-cover overflow">
+        <div className="relative h-48 bg-no-repeat bg-cover overflow lg:h-56">
           <img
             className="object-cover w-full h-full rounded-t-3xl"
             src="https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg"

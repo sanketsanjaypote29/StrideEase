@@ -6,11 +6,13 @@ import EventFilter from "../components/eventFilter";
 import EventContainer from "../components/eventContainer";
 import Footer from "../components/footer";
 import Navbar from "../components/navBars/dashboardNav";
+import { BASE_URL } from "./helper";
+import Chatbot from "../components/Chatbot";
 const Dashboard = () => {
   const navigate = useNavigate();
   const getUser = async () => {
     try {
-      const response = await axios.get("http://localhost:6005/login/sucess", {
+      const response = await axios.get(`${BASE_URL}/login/sucess`, {
         withCredentials: true,
       });
       // console.log(response);
@@ -24,9 +26,10 @@ const Dashboard = () => {
   }, []);
   return (
     <div className="h-full overflow-x-hidden">
-      <Navbar/>
+      <Navbar />
       <EventFilter />
       <EventContainer />
+      <Chatbot />
       <Footer />
     </div>
   );

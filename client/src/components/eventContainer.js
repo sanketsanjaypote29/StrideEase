@@ -3,7 +3,7 @@ import EventCard from "./eventCard";
 
 const EventContainer = ({ events }) => {
   return (
-    <div className="items-center justify-center min-h-screen mt-8">
+<div className="items-center justify-center min-h-screen mt-8">
       <div className="flex items-center justify-center">
         <label className="relative flex text-3xl font-bold text-black ">
           Events At

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IoCreate } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import { BASE_URL } from "./helper";
 const Register = () => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -11,7 +11,7 @@ const Register = () => {
   const registerUser = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:6005/api/register", {
+      const response = await axios.post(`${BASE_URL}/api/register`, {
         username,
         email,
         password,
@@ -24,15 +24,15 @@ const Register = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen min-x-full">
-      <div className="justify-start hidden md:flex w-xl h-xl">
-        <img
-          src="./sign-up/sign-up-not-css.svg"
-          alt="register"
-          className="w-full h-[32rem]"
-        />
-      </div>
+    <div className="justify-start hidden md:flex w-xl h-xl">
+      <img
+        src="./sign-up/sign-up-not-css.svg"
+        alt="register"
+        className="w-full h-[32rem]"
+      />
+    </div>
 
-      <div className="flex justify-center p-6 mx-12 rounded-lg shadow-lg h-fit lg:h-[30rem] w-80 bg-white-50 shadow-blue-950">
+    <div className="flex justify-center p-6 mx-12 rounded-lg shadow-lg h-fit lg:h-[30rem] w-80 bg-white-50 shadow-blue-950">
         <form className="w-70" onSubmit={registerUser}>
           <div className="mt-10 mb-5">
             <div className="relative w-full min-w-[200px] h-10">

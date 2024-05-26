@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./stepper.css";
 import { useNavigate } from "react-router-dom";
 import CreateEventNav from "../components/navBars/CreateEventNav";
+import { BASE_URL } from "./helper";
 
 const defaultPosition = {
   lat: 18.5204,
@@ -50,7 +51,7 @@ const CreateEvent = () => {
   //want to get the googleId of the user in local storage
   const getUser = async () => {
     try {
-      const response = await axios.get("http://localhost:6005/login/sucess", {
+      const response = await axios.get(`${BASE_URL}/login/sucess`, {
         withCredentials: true,
       });
       console.log(response);
@@ -89,7 +90,7 @@ const CreateEvent = () => {
   const handleData = async () => {
     const googleId = localStorage.getItem("googleId");
     try {
-      const response = await fetch("http://localhost:6005/", {
+      const response = await fetch(`${BASE_URL}`, {
         method: "post",
         body: JSON.stringify({
           googleId,
@@ -222,45 +223,48 @@ const CreateEvent = () => {
     <>
       <CreateEventNav />
       <div className="flex flex-col items-center justify-center">
-        {/* Stepper component */}
-        <div className="w-full px-24 py-4 mx-10 mb-16 ">
-          <Stepper
-            activeStep={activeStep}
-            isFirstStep={isFirstStep}
-            isLastStep={isLastStep}>
-            {steps.map((step, index) => (
-              <Step
-                className="bg-transperent"
-                key={index}
-                onClick={() => setActiveStep(index)}>
-                {index === activeStep && (
-                  <>
-                    <span
-                      className={`w-6 h-6 px-0 font-medium text-center text-white  rounded-full text-md ${activeColor(
-                        index
-                      )}`}>
-                      {index + 1}
-                    </span>
-                    {isFinalStep(index) ? null : (
-                      <div className="mt-2 text-gray-800">{step}</div>
-                    )}
-                  </>
-                )}
-                {index !== activeStep && (
-                  <>
-                    <span
-                      className={`w-6 h-6 font-medium text-center text-white rounded-full text-md ${activeColor(
-                        index
-                      )}`}>
-                      {index + 1}
-                    </span>
-                    <div className="text-gray-400 ">{step}</div>
-                  </>
-                )}
-              </Step>
-            ))}
-          </Stepper>
-        </div>
+  {/* Stepper component */}
+  <div className="w-full px-4 py-4 mb-16 md:px-24">
+    <Stepper
+      activeStep={activeStep}
+      isFirstStep={isFirstStep}
+      isLastStep={isLastStep}
+    >
+      {steps.map((step, index) => (
+        <Step
+          className="z-0 bg-transparent"
+          key={index}
+          onClick={() => setActiveStep(index)}
+        >
+          {index === activeStep ? (
+            <>
+              <span
+                className={`w-6 h-6 px-0 font-medium text-center text-white rounded-full text-md ${activeColor(
+                  index
+                )}`}
+              >
+                {index + 1}
+              </span>
+              {!isFinalStep(index) && (
+                <div className="mt-2 text-center text-gray-800">{step}</div>
+              )}
+            </>
+          ) : (
+            <>
+              <span
+                className={`w-6 h-6 font-medium text-center text-white rounded-full text-md ${activeColor(
+                  index
+                )}`}
+              >
+                {index + 1}
+              </span>
+              <div className="text-center text-gray-400">{step}</div>
+            </>
+          )}
+        </Step>
+      ))}
+    </Stepper>
+  </div>
 
         {/* Form */}
         <div className="h-auto p-4 mx-4 border w-2/2 bg-amber-50 left-96 mb-28 rounded-2xl lg:w-1/2">
@@ -442,7 +446,7 @@ const CreateEvent = () => {
               </div>
             )}
             {activeStep === 2 && (
-              <div className="">
+              <div>
                 {/* Description */}
                 <div className="mb-20 h-80">
                   <div className="flex items-center mb-2">
@@ -491,30 +495,27 @@ const CreateEvent = () => {
               </div>
             )}
             {activeStep === 4 && (
-              <div>
+              <div className="max-w-4xl p-4 mx-auto rounded-lg bg-amber-50">
+              <div className="mb-4">
                 <div className="flex items-center mb-2">
                   <label className="mr-1 font-bold text-black">Ticket</label>
-                  <label className="block text-sm font-bold text-gray-500">
-                    Name
-                  </label>
+                  <label className="block text-sm font-bold text-gray-500">Name</label>
                 </div>
-
-                <div className="flex mb-4">
-                  <input
-                    type="text"
-                    className="w-8/12 px-3 py-2 mr-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
-                    placeholder="Enter ticket name "
-                    onChange={(e) => setTicketName(e.target.value)}
-                  />
-                </div>
+                <input
+                  type="text"
+                  className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
+                  placeholder="Enter ticket name"
+                  onChange={(e) => setTicketName(e.target.value)}
+                />
+              </div>
+            
+              <div className="mb-4">
                 <div className="flex items-center mb-2">
                   <label className="mr-1 font-bold text-black">Ticket</label>
-                  <label className="block text-sm font-bold text-gray-500">
-                    Type
-                  </label>
+                  <label className="block text-sm font-bold text-gray-500">Type</label>
                 </div>
-                <div className="mb-5">
-                  <div className="flex items-center mb-2">
+                <div className="flex items-center space-x-4">
+                  <div>
                     <input
                       type="radio"
                       id="paidTicket"
@@ -524,10 +525,9 @@ const CreateEvent = () => {
                       onChange={(e) => setTicketType(e.target.value)}
                       className="mr-2"
                     />
-                    <label htmlFor="paidTicket" className="mr-4 text-gray-700">
-                      Paid
-                    </label>
-
+                    <label htmlFor="paidTicket" className="text-gray-700">Paid</label>
+                  </div>
+                  <div>
                     <input
                       type="radio"
                       id="freeTicket"
@@ -537,10 +537,9 @@ const CreateEvent = () => {
                       onChange={(e) => setTicketType(e.target.value)}
                       className="mr-2"
                     />
-                    <label htmlFor="freeTicket" className="mr-4 text-gray-700">
-                      Free
-                    </label>
-
+                    <label htmlFor="freeTicket" className="text-gray-700">Free</label>
+                  </div>
+                  <div>
                     <input
                       type="radio"
                       id="donationTicket"
@@ -549,102 +548,81 @@ const CreateEvent = () => {
                       checked={ticketType === "Donation"}
                       onChange={(e) => setTicketType(e.target.value)}
                       className="mr-2"
-                      required="true"
+                      required
                     />
-                    <label htmlFor="donationTicket" className="text-gray-700">
-                      Donation
-                    </label>
+                    <label htmlFor="donationTicket" className="text-gray-700">Donation</label>
                   </div>
                 </div>
-
-                {/* Second row */}
-
-                <div className="flex mb-4">
-                  <div className="flex flex-col w-full">
-                    {/* Wrap second input field and label in a div with flex direction column */}
-                    <div className="flex items-center mb-2">
-                      <label className="mr-1 font-bold text-black">Total</label>
-                      <label className="block text-sm font-bold text-gray-500">
-                        Slots For Event
-                      </label>
-                    </div>
-                    {/* Move the label above the input field */}
-                    <input
-                      type="text"
-                      className="px-3 py-2 leading-tight text-gray-700 border rounded appearance-none w-80 focus:outline-none focus:shadow-outline"
-                      placeholder="Input Field 2"
-                      required="true"
-                      onChange={(e) => setTotalSlots(e.target.value)}
-                    />
+              </div>
+            
+              <div className="flex flex-wrap mb-4">
+                <div className="w-full mb-4 md:w-1/2 md:pr-2 md:mb-0">
+                  <div className="flex items-center mb-2">
+                    <label className="mr-1 font-bold text-black">Total</label>
+                    <label className="block text-sm font-bold text-gray-500">Slots For Event</label>
                   </div>
-                  <div className="flex flex-col w-full">
-                    <div className="flex items-center mb-2">
-                      <label className="mr-1 font-bold text-black">
-                        Ticket
-                      </label>
-                      <label className="block text-sm font-bold text-gray-500">
-                        Price
-                      </label>
-                    </div>
-                    {/* Move the label above the input field */}
-                    <input
-                      type="text"
-                      className="px-3 py-2 leading-tight text-gray-700 border rounded appearance-none w-80 focus:outline-none focus:shadow-outline"
-                      placeholder="Input Field 2"
-                      required="true"
-                      onChange={(e) => {
-                        setTicketPrice(e.target.value);
-                      }}
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
+                    placeholder="Input Field 2"
+                    required
+                    onChange={(e) => setTotalSlots(e.target.value)}
+                  />
                 </div>
-
-                {/* Third row */}
-                <div className="h-20 mb-4">
-                  <div className="w-full h-auto mt-8 bg-amber-50 left-96 rounded-2xl">
-                    <div className="flex mb-4">
-                      <div className="flex flex-col mr-20">
-                        <div className="flex items-center mb-2">
-                          <label className="mr-1 font-bold text-black">
-                            Ticket
-                          </label>
-                          <label className="block text-sm font-bold text-gray-500">
-                            Sale stat at
-                          </label>
-                        </div>
-                        <div className="flex">
-                          <FaRegCalendarAlt className="mt-1 mr-2 text-xl" />
-                          <DatePicker
-                            selected={startDate}
-                            onChange={handleStartDateChange}
-                            className="mr-2 border"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col ">
-                        <div className="flex items-center mb-2">
-                          <label className="mr-1 font-bold text-black">
-                            Ticket
-                          </label>
-                          <label className="block text-sm font-bold text-gray-500">
-                            Sale end on
-                          </label>
-                        </div>
-
-                        <div className="flex">
-                          <FaRegCalendarAlt className="mt-1 mr-2 text-xl" />
-                          <DatePicker
-                            selected={endDate}
-                            onChange={handleEndDateChange}
-                            className="mr-2 border"
-                          />
-                        </div>
-                      </div>
+                <div className="w-full md:w-1/2 md:pl-2">
+                  <div className="flex items-center mb-2">
+                    <label className="mr-1 font-bold text-black">Ticket</label>
+                    <label className="block text-sm font-bold text-gray-500">Price</label>
+                  </div>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 leading-tight text-gray-700 border rounded appearance-none focus:outline-none focus:shadow-outline"
+                    placeholder="Input Field 2"
+                    required
+                    onChange={(e) => setTicketPrice(e.target.value)}
+                  />
+                </div>
+              </div>
+            
+              <div className="mb-4">
+                <div className="flex flex-wrap">
+                  <div className="w-full mb-4 md:w-1/2 md:pr-2 md:mb-0">
+                    <div className="flex items-center mb-2">
+                      <label className="mr-1 font-bold text-black">Ticket</label>
+                      <label className="block text-sm font-bold text-gray-500">Sale start at</label>
+                    </div>
+                    <div className="flex items-center">
+                      <FaRegCalendarAlt className="mr-2 text-xl" />
+                      <DatePicker
+                        selected={startDate}
+                        onChange={handleStartDateChange}
+                        className="w-full px-3 py-2 border rounded"
+                      />
+                    </div>
+                  </div>
+                  <div className="w-full md:w-1/2 md:pl-2">
+                    <div className="flex items-center mb-2">
+                      <label className="mr-1 font-bold text-black">Ticket</label>
+                      <label className="block text-sm font-bold text-gray-500">Sale end on</label>
+                    </div>
+                    <div className="flex items-center">
+                      <FaRegCalendarAlt className="mr-2 text-xl" />
+                      <DatePicker
+                        selected={endDate}
+                        onChange={handleEndDateChange}
+                        className="w-full px-3 py-2 border rounded"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
+            
+              {/* <div className="flex justify-end space-x-2">
+                <button className="px-4 py-2 text-white bg-gray-400 rounded hover:bg-gray-500">Back</button>
+                <button className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">Submit</button>
+              </div> */}
+            </div>
+            
             )}
             <div className="flex justify-end m-5">
               {activeStep !== 0 && (
